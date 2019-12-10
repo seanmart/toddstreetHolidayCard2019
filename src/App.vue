@@ -1,11 +1,11 @@
 <template>
-  <div id="scene">
+  <div id="scene" ref="scene">
     <div id="sky"/>
     <div id="skyline" class="scroll-item" data-speed="-.5">
       <buildings class="buildings" />
     </div>
     <div id="greeting">
-      <div class="content scroll-item" data-speed="-.5">
+      <div class="content scroll-item" data-speed="-.2">
         <logo class="logo"/>
         <p>
           It is a long established fact that a reader will be
@@ -107,6 +107,8 @@ export default {
     }
   },
   mounted(){
+    setTimeout(()=> this.$refs.scene.style.opacity = 1,250)
+
     let scrollItems = document.querySelectorAll('.scroll-item')
     this.scrollItems = Array.apply(null, scrollItems)
     window.addEventListener('scroll',this.handleScroll)
@@ -125,8 +127,6 @@ export default {
         } else if (distance){
           transformY = (window.scrollY / document.body.clientHeight) * distance
         }
-
-        console.log(transformY)
 
         item.style.transform = `translateY(${transformY}px)`
       })
@@ -224,6 +224,8 @@ html{
 }
 
 #scene{
+  opacity: 0;
+  transition: opacity 3s;
   width: 100%;
   padding-top: 80vh;
   overflow: hidden;
