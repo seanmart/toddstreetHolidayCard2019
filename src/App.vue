@@ -117,6 +117,7 @@ export default {
   },
   methods:{
     handleScroll(){
+      if (window.innerWidth < 600) return
       this.scrollItems.forEach( item => {
         let speed = item.getAttribute('data-speed')
         let distance = item.getAttribute('data-distance')
