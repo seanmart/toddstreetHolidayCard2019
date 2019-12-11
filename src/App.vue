@@ -116,6 +116,7 @@ export default {
   },
   methods:{
     handleScroll(){
+      if (window.innerWidth < 600) return
       this.scrollItems.forEach( item => {
         let speed = item.getAttribute('data-speed')
         let distance = item.getAttribute('data-distance')
@@ -181,6 +182,7 @@ html{
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  overflow: hidden;
 }
 
 #skyline .skyline{
@@ -192,7 +194,7 @@ html{
 #greeting{
   position: absolute;
   top: 0px;
-  height: 60vh;
+  height: 80vh;
   width: 100%;
   padding: 2vw;
   display: flex;
@@ -222,21 +224,19 @@ html{
   min-height: 100vh;
 }
 
+.building{
+  flex: 0 0 90%;
+}
+
 .building.left{
   margin-top: 120px;
-  flex: 0 0 80%;
   position: relative;
   z-index: -1;
   transform: translateX(26%);
 }
 
-.building.main{
-  flex: 0 0 80%;
-}
-
 .building.right{
   margin-top: 90px;
-  flex: 0 0 80%;
   transform: translateX(-10%);
 }
 

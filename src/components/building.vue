@@ -63,7 +63,7 @@ export default {
 .building .roof{
   transition: .25s;
   height: 30px;
-  margin: 0px -20px;
+  margin: 0px -1.5vw;
   background-color: white;
   position: relative;
   z-index: 1;
@@ -115,4 +115,5 @@ export default {
   background-image: url('../assets/buildingTopBorder.svg');
   background-size: 100px 100px;
 }
+
 </style>
