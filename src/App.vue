@@ -171,7 +171,6 @@ html{
   height: 150vh;
   background: rgb(207,207,207);
   background: linear-gradient(0deg, #c0edff 0%, #74bfde 100%);
-  z-index: -1;
 }
 
 #skyline{
@@ -182,7 +181,6 @@ html{
   left: 0px;
   right: 0px;
   height: 100vh;
-  z-index: -1;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -221,6 +219,7 @@ html{
 
 #buildings{
   position: relative;
+  z-index: 1;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -234,9 +233,7 @@ html{
 
 .building.left{
   margin-top: 120px;
-  position: relative;
-  z-index: -1;
-  transform: translateX(26%);
+  transform: translateX(25%);
 }
 
 .building.right{
