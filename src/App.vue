@@ -182,6 +182,7 @@ html{
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  overflow: hidden;
 }
 
 #skyline .skyline{
