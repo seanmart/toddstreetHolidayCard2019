@@ -58,6 +58,8 @@ export default {
   mounted(){
     setTimeout(()=> this.$refs.scene.style.opacity = 1,250)
 
+    if (window.innerWidth < 700) return
+
     let scrollItems = document.querySelectorAll('.scroll-item')
     this.scrollItems = Array.apply(null, scrollItems)
     window.addEventListener('scroll',this.handleScroll)
@@ -116,7 +118,7 @@ export default {
   },
   methods:{
     handleScroll(){
-      if (window.innerWidth < 700) return
+
       this.scrollItems.forEach( item => {
         let speed = item.getAttribute('data-speed')
         let distance = item.getAttribute('data-distance')
