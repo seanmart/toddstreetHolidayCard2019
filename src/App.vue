@@ -116,7 +116,7 @@ export default {
   },
   methods:{
     handleScroll(){
-      if (window.innerWidth < 600) return
+      if (window.innerWidth < 700) return
       this.scrollItems.forEach( item => {
         let speed = item.getAttribute('data-speed')
         let distance = item.getAttribute('data-distance')
@@ -155,7 +155,7 @@ html{
 #scene{
   opacity: 0;
   transition: opacity 3s;
-  width: 100%;
+  width: 100vw;
   padding-top: 80vh;
   overflow: hidden;
 }
@@ -182,7 +182,6 @@ html{
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: hidden;
 }
 
 #skyline .skyline{
