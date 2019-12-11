@@ -158,6 +158,7 @@ html{
   width: 100vw;
   padding-top: 80vh;
   overflow: hidden;
+  position: relative;
 }
 
 #sky{
@@ -175,9 +176,10 @@ html{
   fill: #74bfde;
   opacity: .8;
   position: absolute;
-  bottom: 0px;
+  top: 0px;
   left: 0px;
   right: 0px;
+  height: 100vh;
   z-index: -1;
   display: flex;
   justify-content: center;

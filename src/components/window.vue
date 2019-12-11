@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="window">
-      <div class="wrapper" :style="{borderColor: border}">
+      <div class="wrapper" :style="{outlineColor: border}">
         <div class="inner-wrapper">
           <div class="shadow"/>
           <div class="content" :style="windowStyle"/>
@@ -47,16 +47,16 @@ export default {
 }
 
 .window .wrapper{
-  border-width: 1vw;
-  border-style: solid;
+  outline-width: 1vw;
+  outline-style: solid;
   height: 100%;
   position: relative;
   z-index: 1;
 }
 
 .window .inner-wrapper{
-  height: 101%;
-  width: 101%;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
   position: relative;
 }
