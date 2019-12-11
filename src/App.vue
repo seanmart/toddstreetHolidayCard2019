@@ -1,105 +1,54 @@
 <template>
   <div id="scene" ref="scene">
     <div id="sky"/>
-    <div id="skyline" class="scroll-item" data-speed="-.5">
-      <buildings class="buildings" />
+    <div id="skyline" class="scroll-item" data-speed=".5">
+      <skyline class="skyline" />
     </div>
     <div id="greeting">
       <div class="content scroll-item" data-speed="-.2">
         <logo class="logo"/>
-        <p>
-          It is a long established fact that a reader will be
-          distracted by the readable content of a page when looking
-          at its layout. The point of using Lorem Ipsum is that it
-          has a more-or-less normal distribution of letters,
-          as opposed to using 'Content here, content here',
-          making it look like readable English.
+        <p>Click inside the windows of our Holiday house for a few festive scenes. Some might even be similar to your own!
         </p>
       </div>
     </div>
     <div id="buildings">
-
-      <div class="left">
-        <div class="roof"/>
-        <div class="shadow">
-          <roof-arch/>
-          <roof-arch/>
-          <roof-arch/>
-        </div>
-        <div class="windows">
-          <template v-for="i in 12">
-          <div class="window" :key="i">
-            <div class="wrapper">
-              <div class="content">
-                <window-snow class="snow"/>
-              </div>
-            </div>
-          </div>
+      <building class="left" :props="leftBuilding">
+        <template v-for="i in images.length - 2">
+          <building-window :key="i" color="#777"/>
         </template>
-        </div>
-      </div>
+      </building>
 
-      <div class="main">
-        <waterTower class="water-tower"/>
-        <div class="front bricks">
-          <div class="roof"/>
-          <div class="shadow">
-            <roof-arch/>
-            <roof-arch/>
-            <roof-arch/>
-            <roof-arch/>
-            <roof-arch/>
-          </div>
-          <div class="windows">
-            <template v-for="i in 12">
-            <div class="window" :key="i">
-              <div class="wrapper">
-                <div class="content">
-                  <window-snow class="snow"/>
-                </div>
-              </div>
-            </div>
-          </template>
-          </div>
-        </div>
-        <div class="side">
-          <div class="roof"/>
-          <div class="shadow"/>
-        </div>
-      </div>
+      <building class="main" :props="mainBuilding">
 
-      <div class="right">
-        <div class="roof"/>
-        <div class="shadow">
-          <roof-arch/>
-          <roof-arch/>
-          <roof-arch/>
-        </div>
-        <div class="windows">
-          <template v-for="i in 12">
-          <div class="window" :key="i">
-            <div class="wrapper">
-              <div class="content">
-                <window-snow class="snow"/>
-              </div>
-            </div>
-          </div>
+        <template v-slot:roof>
+          <water-tower class="water-tower"/>
         </template>
-        </div>
-      </div>
+
+        <template v-for="(image,i) in images">
+          <building-window :key="i" :image="image" :border="mainBuilding.roofArchSide"/>
+        </template>
+
+      </building>
+
+      <building class="right" :props="rightBuilding">
+        <template v-for="i in images.length - 2">
+          <building-window :key="i" color="#777"/>
+        </template>
+      </building>
     </div>
-    <canvas id="canvas"/>
+    <make-it-snow/>
   </div>
 </template>
 
 <script>
-import buildings from '@/components/buildings'
-import roofArch from '@/components/roofArch'
-import windowSnow from '@/components/windowSnow'
+import building from '@/components/building'
+import skyline from '@/components/skyline'
 import waterTower from '@/components/waterTower'
+import makeItSnow from '@/components/makeItSnow'
+import buildingWindow from '@/components/window'
 import logo from '@/components/logo'
 export default {
-  components:{buildings,roofArch,windowSnow,waterTower,logo},
+  components:{building,buildingWindow,skyline,waterTower,logo,makeItSnow},
   name: 'app',
   data(){
     return{
@@ -112,12 +61,61 @@ export default {
     let scrollItems = document.querySelectorAll('.scroll-item')
     this.scrollItems = Array.apply(null, scrollItems)
     window.addEventListener('scroll',this.handleScroll)
-
-    this.makeItSnow()
+  },
+  computed:{
+    images(){
+      return[
+        'images/delivery.jpg',
+        'images/movie.jpg',
+        'images/flour.jpg',
+        'images/august.jpg',
+        'images/peeling.jpg',
+        'images/roof.jpg',
+        'images/roasting.jpg',
+      ]
+    },
+    leftBuilding(){
+      return{
+        arches: 4,
+        front: 'linear-gradient(132deg, rgba(232,232,232,1) 0%, rgba(195,195,195,1) 69%, rgba(91,91,91,1) 100%)',
+        roofFront: '#fff',
+        roofFrontShadow: 'rgba(0,0,0,.1)',
+        side: '#999',
+        roofSide:'#bbb',
+        roofSideShadow:'rgba(0,0,0,.1)',
+        roofArchFront: '#eee',
+        roofArchSide: '#999'
+      }
+    },
+    mainBuilding(){
+      return{
+        arches: 4,
+        front: 'linear-gradient(132deg, rgba(213,236,255,1) 0%, rgba(142,205,255,1) 100%)',
+        roofFront: '#fff',
+        roofFrontShadow: 'rgba(47,65,85,.2)',
+        side: 'linear-gradient(270deg, rgba(0,16,29,1) 0%, rgba(0,43,77,1) 100%)',
+        roofSide:'#5f85af',
+        roofSideShadow:'rgba(0,0,0,.4)',
+        roofArchFront: '#d9f1fb',
+        roofArchSide: '#5f85af'
+      }
+    },
+    rightBuilding(){
+      return{
+        arches: 4,
+        front: 'linear-gradient(132deg, rgba(232,232,232,1) 0%, rgba(195,195,195,1) 69%, rgba(91,91,91,1) 100%)',
+        roofFront: '#fff',
+        roofFrontShadow: 'rgba(0,0,0,.1)',
+        side: '#999',
+        roofSide:'#bbb',
+        roofSideShadow:'rgba(0,0,0,.1)',
+        roofArchFront: '#eee',
+        roofArchSide: '#999'
+      }
+    }
   },
   methods:{
     handleScroll(){
-      if (window.innerWidth < 600) return
       this.scrollItems.forEach( item => {
         let speed = item.getAttribute('data-speed')
         let distance = item.getAttribute('data-distance')
@@ -132,71 +130,7 @@ export default {
         item.style.transform = `translateY(${transformY}px)`
       })
     },
-    makeItSnow(){
-      let canvas = document.getElementById('canvas')
-      let ctx = canvas.getContext('2d')
 
-      let w = window.innerWidth;
-      let h = window.innerHeight;
-      canvas.width = w
-      canvas.height = h
-
-      window.addEventListener('resize', ()=>{
-        w = window.innerWidth;
-        h = window.innerHeight;
-        canvas.width = w
-        canvas.height = h
-      })
-
-      let mp = 100
-      let particles = []
-
-      for (let i = 0; i < mp; i++){
-        particles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          r: Math.random() * 4 + 1,
-          d: Math.random() * mp
-        })
-      }
-
-      function draw(){
-        ctx.clearRect(0,0,w,h)
-        ctx.fillStyle = "rgba(255,255,255,.8)"
-        ctx.beginPath()
-
-        for (let i = 0; i < mp; i++){
-          let p = particles[i]
-          ctx.moveTo(p.x , p.y)
-          ctx.arc(p.x, p.y ,p.r ,0 , Math.PI*2, true)
-        }
-        ctx.fill();
-        update()
-      }
-
-      let angle = 0
-
-      function update(){
-        angle += 0.01;
-
-        for (let i = 0; i < mp; i++){
-          let p = particles[i]
-          p.y += Math.cos(angle + p.d) + 1 + p.r / 2
-          p.x += Math.sin(angle) * 2;
-
-          if (p.x > w + 5 || p.x < -5 || p.y > h){
-            particles[i] = i % 3 > 0
-            ? {x: Math.random() * w, y: -10, r: p.r, d: p.d}
-            : Math.sin(angle) > 0
-            ? {x: -5, y: Math.random() * h, r: p.r, d: p.d}
-            : {x: w + 5, y: Math.random() * h, r: p.r, d: p.d}
-          }
-        }
-
-      }
-
-      setInterval(draw, 33)
-    }
   }
 }
 </script>
@@ -215,15 +149,6 @@ html{
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-}
-
-#canvas{
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  z-index: 1;
 }
 
 #scene{
@@ -248,17 +173,17 @@ html{
 #skyline{
   fill: #74bfde;
   opacity: .8;
-  position: fixed;
+  position: absolute;
   bottom: 0px;
   left: 0px;
   right: 0px;
   z-index: -1;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-end;
 }
 
-#skyline .buildings{
+#skyline .skyline{
   flex: 0 0 auto;
   width: 120%;
   min-width: 1000px;
@@ -267,7 +192,7 @@ html{
 #greeting{
   position: absolute;
   top: 0px;
-  height: 80vh;
+  height: 60vh;
   width: 100%;
   padding: 2vw;
   display: flex;
@@ -280,7 +205,7 @@ html{
   max-width: 500px;
   text-align: center;
   color: white;
-  font-size: 20px;
+  font-size: calc(14px + 1vw);
 }
 
 #greeting .logo{
@@ -294,140 +219,36 @@ html{
   display: flex;
   justify-content: center;
   align-items: stretch;
+  min-height: 100vh;
 }
 
-#buildings .roof{
-  transition: .25s;
-  height: 30px;
-  margin: 0px -20px;
-  background: white;
-}
-
-#buildings .side .roof{
-  background: #bbb;
-}
-
-#buildings .shadow{
-  height: 60px;
-  background: rgba(0,0,0,.2);
-  display: flex;
-  justify-content: space-around;
-}
-
-#buildings .shadow .roof-arch{
-  height: 80%;
-  flex: 0 0 auto;
-}
-
-#buildings .windows{
-  display: flex;
-  flex-wrap: wrap;
-  padding: 10%;
-}
-
-#buildings .window {
-    flex: 0 0 33.333%;
-    height:auto;
-}
-
-#buildings .window:before {
-    content:'';
-    float:left;
-    padding-top:100%;
-}
-
-#buildings .window .wrapper{
-  width: 100%;
-  height: 100%;
-  padding: 10%;
-}
-
-#buildings .window .content{
-  background: #999;
-  height: 100%;
-  position: relative;
-  box-shadow: inset 10px 10px 0px rgba(0,0,0,.3)
-}
-
-#buildings .window .snow{
-  fill: white;
-  position: absolute;
-  top: 95%;
-  left: -5%;
-  width: 110%;
-}
-
-#buildings .left{
+.building.left{
   margin-top: 120px;
-  flex: 0 0 120%;
-  padding-left: 60%;
-  background: #bbb;
+  flex: 0 0 80%;
   position: relative;
-  z-index: -1
+  z-index: -1;
+  transform: translateX(26%);
 }
 
-/* ------------------ main --------------------- */
-#buildings .main{
-  flex: 0 0 90%;
-  display: flex;
-  align-items: stretch;
-  position: relative;
+.building.main{
+  flex: 0 0 80%;
 }
 
-#buildings .main .water-tower{
+.building.right{
+  margin-top: 90px;
+  flex: 0 0 80%;
+  transform: translateX(-10%);
+}
+
+.building.main .water-tower{
   position: absolute;
   bottom: 100%;
-  right: 15%;
-  fill: #2f4155;
+  right: 3%;
   height: 30vw;
-  max-height: 350px;
+  max-height: 300px;
   z-index: 1;
 }
 
-#buildings .main .water-tower .shadow{
-  fill: #1b2836;
-}
 
-#buildings .main .water-tower .roof{
-  fill: #5f85af;
-}
-
-#buildings .main .front{
-  flex: 0 0 70%;
-  background-color: #d9f1fb;
-}
-
-#buildings .main .content{
-  background: #1b2836;
-}
-
-#buildings .main .side{
-  flex: 0 0 30%;
-  background: #2f4155;
-}
-
-#buildings .main .side .roof{
-  background: #5f85af
-}
-
-#buildings .right{
-  margin-top: 100px;
-  flex: 0 0 90%;
-  padding-right: 30%;
-  background: #bbb;
-  transform: translateX(-22%);
-}
-
-@media screen and (max-width: 1000px){
-  #buildings .window{
-    flex: 0 0 50%;
-  }
-}
-
-@media screen and (max-width: 600px){
-  #buildings .window{
-    flex: 0 0 100%;
-  }
-}
 
 </style>
