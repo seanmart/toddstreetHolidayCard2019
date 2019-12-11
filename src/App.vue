@@ -138,14 +138,15 @@ export default {
 
       let w = window.innerWidth;
       let h = window.innerHeight;
+      canvas.width = w
+      canvas.height = h
 
       window.addEventListener('resize', ()=>{
         w = window.innerWidth;
         h = window.innerHeight;
+        canvas.width = w
+        canvas.height = h
       })
-
-      canvas.width = w
-      canvas.height = h
 
       let mp = 100
       let particles = []
@@ -222,6 +223,7 @@ html{
   left: 0px;
   right: 0px;
   bottom: 0px;
+  z-index: 1;
 }
 
 #scene{
