@@ -250,6 +250,12 @@ html{
   z-index: 1;
 }
 
+@media screen and (max-width: 600px){
+  .skyline{
+    transform: translateX(10%);
+  }
+}
+
 
 
 </style>
