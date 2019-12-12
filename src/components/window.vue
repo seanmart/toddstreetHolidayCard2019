@@ -107,7 +107,7 @@ export default {
 
 .window .bulbs{
   position: absolute;
-  top: 100%;
+  bottom: -25%;
   width: 100%;
   z-index: -1;
 }
