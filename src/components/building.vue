@@ -16,6 +16,11 @@
       <div class="windows">
         <slot/>
       </div>
+      <div class="ground-floor">
+        <div class="door" :style="{background: me.side}">
+
+        </div>
+      </div>
     </div>
     <div class="side" :style="{background: me.side}">
       <div class="brick"/>
@@ -94,6 +99,24 @@ export default {
   display: flex;
   flex-wrap: wrap;
   padding: 7%;
+  padding-bottom: 50vw;
+}
+
+.building .ground-floor{
+  height: 40vw;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 10%;
+  padding-bottom: 0px;
+}
+
+.building .door{
+  box-shadow: inset 10px 10px 0px rgba(0, 0, 0, 0.3);
+  background: black;
+  width: 100%;
+  height: 100%;
 }
 
 .building .front{

@@ -19,7 +19,6 @@ export default function() {
   }
 
   function callback() {
-    console.log("running");
     itemsArray.forEach(item => {
       let transformY = item.speed
         ? window.scrollY * item.speed

@@ -1,52 +1,68 @@
 <template lang="html">
-  <div class="window">
-      <div class="wrapper" :style="{outlineColor: border}">
+  <div class="window" @click="selected">
+    <div class="outer-wrapper" ref="wrapper">
+      <div class="wrapper" :style="{ outlineColor: border }" ref="content">
         <div class="inner-wrapper">
-          <div class="shadow"/>
-          <div class="content" :style="windowStyle"/>
+          <div class="shadow" />
+          <div class="content" :style="windowStyle" />
         </div>
-        <windowSnow class="snow"/>
+        <windowSnow class="snow" />
+        <lights v-if="lights"/>
+        <bulbs v-if="bulbs"/>
       </div>
+    </div>
   </div>
 </template>
 
 <script>
-import windowSnow from '@/components/windowSnow'
+import gsap from 'gsap'
+import lights from '@/components/lights'
+import bulbs from '@/components/bulbs'
+import windowSnow from "@/components/windowSnow";
 export default {
-  components:{windowSnow},
-  props:{
-    image: {type: String, default: null},
-    color: {type: String, default: null},
-    border: {type:String, default: '#aaa'}
+  components: { windowSnow,lights,bulbs },
+  props: {
+    lights: {type: Boolean, default: false},
+    bulbs: {type: Boolean, default: false},
+    image: { type: String, default: null },
+    color: { type: String, default: null },
+    border: { type: String, default: "#aaa" }
   },
-  computed:{
-    windowStyle(){
-      if (this.image){
-        let image = require('@/assets/' + this.image)
-        return {backgroundImage: `url(${image})`}
-      }
-      if (this.color) return {backgroundColor: this.color}
-      return {}
+  computed: {
+    windowStyle() {
+      let styles = {}
+      if (this.image) styles.backgroundImage = `url(${require("@/assets/" + this.image)})`
+      if (this.color) styles.backgroundColor = this.color
+      return styles
+    }
+  },
+  methods: {
+    selected(e) {
+      e.stopImmediatePropagation();
+      this.$emit('selected', this.image || null)
     }
   }
-}
+};
 </script>
 
 <style lang="css">
-
 .window {
-    flex: 0 0 50%;
-    height:auto;
-    padding: 5%
+  flex: 0 0 50%;
+  height: auto;
+  padding: 8%;
 }
 
 .window:before {
-    content:'';
-    float:left;
-    padding-top:100%;
+  content: "";
+  float: left;
+  padding-top: 100%;
 }
 
-.window .wrapper{
+.window .outer-wrapper{
+  height: 100%;
+}
+
+.window .wrapper {
   outline-width: 1vw;
   outline-style: solid;
   height: 100%;
@@ -54,7 +70,7 @@ export default {
   z-index: 1;
 }
 
-.window .inner-wrapper{
+.window .inner-wrapper {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -62,7 +78,7 @@ export default {
 }
 
 .window .content,
-.window .shadow{
+.window .shadow {
   position: absolute;
   top: -1px;
   left: -1px;
@@ -70,23 +86,33 @@ export default {
   bottom: -1px;
 }
 
-.window .shadow{
-  box-shadow: inset 10px 10px 0px rgba(0,0,0,.3);
+.window .shadow {
+  box-shadow: inset 10px 10px 0px rgba(0, 0, 0, 0.3);
 }
 
-.window .content{
+.window .content {
   background-size: cover;
   background-position: center center;
   z-index: -1;
-  transition: transform .5s ease;
-
+  transition: transform 0.5s ease;
 }
 
-.window:hover .content{
-  transform: scale(1.1)
+.window .lights{
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
 }
 
-.window .snow{
+.window .bulbs{
+  position: absolute;
+  top: 105%;
+  width: 100%;
+  z-index: -1;
+}
+
+.window .snow {
   fill: white;
   position: absolute;
   top: 95%;
@@ -95,10 +121,11 @@ export default {
 }
 
 
-@media screen and (max-width: 600px){
-  .window{
+@media screen and (max-width: 600px) {
+  .window {
     padding: 10%;
     flex: 0 0 100%;
+    margin-bottom: 20px;
   }
 }
 </style>

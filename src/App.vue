@@ -1,44 +1,61 @@
 <template>
-  <div id="scene" ref="scene">
-    <div id="sky" />
-    <div id="skyline" class="scroll-item" data-speed=".5">
-      <skyline class="skyline" />
-    </div>
-    <div id="greeting">
-      <div class="content scroll-item" data-speed="-.2">
-        <logo class="logo" />
-        <p>
-          Click inside the windows of our Holiday house for a few festive
-          scenes. Some might even be similar to your own!
-        </p>
+  <div id="page">
+    <div id="scene" ref="scene">
+      <div id="sky" />
+      <div id="skyline" class="scroll-item" data-speed=".5">
+        <div class="art"><skyline /></div>
+        <div class="color" />
+      </div>
+      <div id="greeting">
+        <div class="content scroll-item" data-speed="-.2">
+          <logo class="logo" />
+          <p>
+            Click inside the windows of our Holiday house for a few festive
+            scenes. Some might even be similar to your own!
+          </p>
+        </div>
+      </div>
+      <div id="buildings">
+        <building class="left" :props="leftBuilding">
+          <template v-for="i in images.length - 2">
+            <building-window :key="i" color="#777" />
+          </template>
+        </building>
+
+        <building class="main" :props="mainBuilding">
+          <template v-slot:roof>
+            <water-tower class="water-tower" />
+            <view-finder class="view-finder"/>
+          </template>
+
+          <template v-for="(item, i) in images">
+            <building-window
+              :key="i"
+              :lights="item.effect ==='lights'"
+              :bulbs="item.effect ==='bulbs'"
+              :image="item.image"
+              :border="mainBuilding.roofArchSide"
+              @selected="setImage($event)"
+            />
+          </template>
+        </building>
+
+        <building class="right" :props="rightBuilding">
+          <template v-for="i in images.length - 2">
+            <building-window :key="i" color="#777" />
+          </template>
+        </building>
+      </div>
+      <div id="bottom">
+        <div class="sidewalk">
+          <div class="top"/>
+          <div class="side"/>
+        </div>
+        <div class="road"/>
       </div>
     </div>
-    <div id="buildings">
-      <building class="left" :props="leftBuilding">
-        <template v-for="i in images.length - 2">
-          <building-window :key="i" color="#777" />
-        </template>
-      </building>
-
-      <building class="main" :props="mainBuilding">
-        <template v-slot:roof>
-          <water-tower class="water-tower" />
-        </template>
-
-        <template v-for="(image, i) in images">
-          <building-window
-            :key="i"
-            :image="image"
-            :border="mainBuilding.roofArchSide"
-          />
-        </template>
-      </building>
-
-      <building class="right" :props="rightBuilding">
-        <template v-for="i in images.length - 2">
-          <building-window :key="i" color="#777" />
-        </template>
-      </building>
+    <div v-if="image" id="image">
+      <img :src="require(`@/assets/${image}`)"/>
     </div>
     <make-it-snow />
   </div>
@@ -48,33 +65,64 @@
 import building from "@/components/building";
 import skyline from "@/components/skyline";
 import waterTower from "@/components/waterTower";
+import viewFinder from '@/components/viewFinder'
 import makeItSnow from "@/components/makeItSnow";
 import buildingWindow from "@/components/window";
 import logo from "@/components/logo";
 import scrollBuddy from "@/assets/scripts/scrollBuddy";
+import gsap from 'gsap'
 export default {
   components: {
     building,
     buildingWindow,
     skyline,
     waterTower,
+    viewFinder,
     logo,
     makeItSnow
   },
+  data(){
+    return{
+      image: null
+    }
+  },
   mounted() {
-    setTimeout(() => (this.$refs.scene.style.opacity = 1), 250);
+    gsap.to('#page', 3,{opacity: 1, delay: .5})
     scrollBuddy();
+  },
+  methods:{
+    setImage(img){
+
+      window.addEventListener('click', this.unsetImage)
+      this.image = img
+
+      this.$nextTick(()=>{
+        let tl = gsap.timeline()
+        tl.set('#image',{scale:.9})
+        tl.to('#scene',.5,{opacity:0, pointerEvents: 'none'})
+        tl.to('#image',.25,{opacity:1, scale: 1},0)
+      })
+    },
+    unsetImage(){
+
+      window.removeEventListener('click', this.unsetImage)
+
+      let tl = gsap.timeline()
+      tl.to('#image',.25,{opacity:0})
+      tl.to('#scene', .25,{opacity: 1,pointerEvents:""},0)
+      tl.add(()=>this.image = null)
+    }
   },
   computed: {
     images() {
       return [
-        "images/delivery.jpg",
-        "images/movie.jpg",
-        "images/flour.jpg",
-        "images/august.jpg",
-        "images/peeling.jpg",
-        "images/roof.png",
-        "images/roasting.jpg"
+        {image:"images/delivery.jpg", effect: 'lights'},
+        {image:"images/movie.jpg", effect: 'bulbs'},
+        {image:"images/flour.jpg", effect: 'bulbs'},
+        {image:"images/august.jpg", effect: 'lights'},
+        {image:"images/peeling.jpg", effect: 'lights'},
+        {image:"images/roof.png", effect: 'bulbs'},
+        {image:"images/roasting.jpg", effect: 'bulbs'},
       ];
     },
     leftBuilding() {
@@ -139,13 +187,35 @@ html {
   box-sizing: border-box;
 }
 
-#scene {
+#page{
   opacity: 0;
-  transition: opacity 3s;
+}
+
+#scene {
   width: 100vw;
   padding-top: 80vh;
   overflow: hidden;
   position: relative;
+  text-align: center;
+}
+
+#image{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5% 0px;
+}
+
+#image img{
+  flex: 0 0 auto;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 #sky {
@@ -159,23 +229,32 @@ html {
 }
 
 #skyline {
-  fill: #74bfde;
   opacity: 0.8;
   position: absolute;
   top: 0px;
   left: 0px;
   right: 0px;
-  height: 100vh;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+#skyline .art {
+  flex: 0 0 90vh;
+  fill: #74bfde;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: hidden;
 }
 
-#skyline .skyline {
-  flex: 0 0 auto;
-  width: 120%;
+#skyline svg {
+  flex: 0 0 120vw;
   min-width: 1000px;
+}
+
+#skyline .color {
+  background: #74bfde;
+  flex: 1 1 auto;
 }
 
 #greeting {
@@ -205,15 +284,16 @@ html {
 #buildings {
   position: relative;
   z-index: 1;
-  width: 100vw;
   display: flex;
+  width: 100vw;
   justify-content: center;
   align-items: stretch;
   min-height: 100vh;
+  transform-origin: bottom;
 }
 
 .building {
-  flex: 0 0 90%;
+  flex: 0 0 90vw;
 }
 
 .building.left {
@@ -235,9 +315,58 @@ html {
   z-index: 1;
 }
 
+.building.main .view-finder {
+  position: absolute;
+  bottom: 100%;
+  right: 17%;
+  height: 15vw;
+  max-height: 100px;
+  z-index: 1;
+  fill: #2f4155;
+}
+
+#bottom{
+  position: relative;
+  z-index: 1;
+}
+
+#bottom .sidewalk .top{
+  height:15vh;
+  width: 100%;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 87%, rgba(186,210,255,1) 100%);
+}
+
+#bottom .sidewalk .side{
+  height:3vh;
+  width: 100%;
+  background: rgb(150,150,150);
+  background: linear-gradient(180deg, rgba(78,78,78,1) 0%, rgba(100,100,100,1) 100%);
+}
+
+#bottom .road{
+  height: 30vh;
+  width: 100%;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 87%, rgba(186,210,255,1) 100%);
+}
+
 @media screen and (max-width: 600px) {
-  .skyline {
-    transform: translateX(10%);
+  #scene {
+    padding-top: 70vh;
+  }
+
+  #greeting {
+    height: 60vh;
+  }
+
+  #skyline .art {
+    transform: translateX(15%);
+    flex: 0 0 80vh;
+  }
+
+  .building.main .view-finder{
+    right: 20%;
   }
 }
 </style>
