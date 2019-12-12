@@ -123,9 +123,8 @@ export default {
 
 @media screen and (max-width: 600px) {
   .window {
-    padding: 10%;
+    padding: 15% 10%;
     flex: 0 0 100%;
-    margin-bottom: 20px;
   }
 }
 </style>

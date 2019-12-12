@@ -16,11 +16,6 @@
       <div class="windows">
         <slot/>
       </div>
-      <div class="ground-floor">
-        <div class="door" :style="{background: me.side}">
-
-        </div>
-      </div>
     </div>
     <div class="side" :style="{background: me.side}">
       <div class="brick"/>
