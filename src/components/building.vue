@@ -94,7 +94,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   padding: 7%;
-  padding-bottom: 50vw;
 }
 
 .building .ground-floor{
