@@ -201,6 +201,7 @@ html {
 
 #image{
   position: fixed;
+  z-index: 20;
   top: 0px;
   left: 0px;
   bottom: 0px;
