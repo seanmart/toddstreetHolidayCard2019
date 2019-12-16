@@ -63,7 +63,7 @@ export default {
 }
 
 .window .wrapper {
-  outline-width: 1vw;
+  outline-width: 1.2vw;
   outline-style: solid;
   height: 100%;
   position: relative;
@@ -106,10 +106,12 @@ export default {
 }
 
 .window .bulbs{
-  position: absolute;
-  bottom: -25%;
   width: 100%;
-  z-index: -1;
+  position: absolute;
+  left: 0px;
+  top: 100%;
+  margin-top: 2%;
+  z-index: 0;
 }
 
 .window .snow {
@@ -118,6 +120,7 @@ export default {
   top: 95%;
   left: -10%;
   width: 120%;
+  z-index: 1;
 }
 
 
@@ -125,6 +128,10 @@ export default {
   .window {
     padding: 15% 10%;
     flex: 0 0 100%;
+  }
+
+  .window .wrapper{
+    outline-width: 10px;
   }
 }
 </style>

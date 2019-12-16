@@ -84,7 +84,8 @@ export default {
 }
 
 .building .roof-shadow .roof-arch{
-  height: 80%;
+  height: 70%;
+  max-height: 8vw;
   flex: 0 0 auto;
   position: relative;
   z-index: 1;
@@ -93,7 +94,7 @@ export default {
 .building .windows{
   display: flex;
   flex-wrap: wrap;
-  padding: 7%;
+  padding: 7% 7% 25%;
 }
 
 .building .ground-floor{

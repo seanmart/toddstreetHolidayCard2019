@@ -33,14 +33,14 @@ export default {
 
 .bulbs{
   display: flex;
-  justify-content: space-between;
-
 }
 .bulb{
   flex: 0 0 auto;
-  width: 10%;
+  margin: 0px auto;
+  height: 5vw;
+  max-height: 70px;
   animation: swing 3s infinite ease;
-  transform-origin: top center;
+  transform-origin: top;
 }
 
 .bulb:nth-child(3n + 2){
@@ -60,6 +60,12 @@ export default {
   }
   100%{
     transform: rotate(-10deg);
+  }
+}
+
+@media screen and (max-width: 600px){
+  .bulb{
+    height: 60px;
   }
 }
 </style>

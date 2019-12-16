@@ -8,6 +8,7 @@
       </div>
       <div id="greeting">
         <div class="content scroll-item" data-speed="-.2">
+          <happy-holidays class="happy-holidays"/>
           <logo class="logo" />
           <p>
             Click inside the windows of our Holiday house for a few festive
@@ -68,6 +69,7 @@ import waterTower from "@/components/waterTower";
 import viewFinder from '@/components/viewFinder'
 import makeItSnow from "@/components/makeItSnow";
 import buildingWindow from "@/components/window";
+import happyHolidays from "@/components/happyHolidays";
 import logo from "@/components/logo";
 import scrollBuddy from "@/assets/scripts/scrollBuddy";
 import gsap from 'gsap'
@@ -79,6 +81,7 @@ export default {
     waterTower,
     viewFinder,
     logo,
+    happyHolidays,
     makeItSnow
   },
   data(){
@@ -261,7 +264,7 @@ html {
 #greeting {
   position: absolute;
   top: 0px;
-  height: 80vh;
+  height: 60vh;
   width: 100%;
   padding: 2vw;
   display: flex;
@@ -271,15 +274,26 @@ html {
 
 #greeting .content {
   width: 70vw;
-  max-width: 500px;
   text-align: center;
-  color: white;
-  font-size: calc(14px + 1vw);
 }
 
 #greeting .logo {
   fill: white;
   margin-bottom: 2vw;
+  display: none;
+}
+
+#greeting .happy-holidays{
+  fill: white;
+  width: 100%;
+  margin-bottom: 2vw;
+}
+
+#greeting p{
+  color: white;
+  font-size: calc(13px + 1vw);
+  display: inline-block;
+  max-width: 600px;
 }
 
 #buildings {
