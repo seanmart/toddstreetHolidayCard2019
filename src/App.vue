@@ -227,6 +227,7 @@ html {
   max-height: 150px;
   max-width: 150px;
   fill: white;
+  z-index: 1;
 }
 
 #image img{
