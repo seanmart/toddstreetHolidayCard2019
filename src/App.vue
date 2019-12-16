@@ -56,6 +56,7 @@
       </div>
     </div>
     <div v-if="image" id="image">
+      <x-icon class="close" @click="unsetImage"/>
       <img :src="require(`@/assets/${image}`)"/>
     </div>
     <make-it-snow />
@@ -71,6 +72,7 @@ import makeItSnow from "@/components/makeItSnow";
 import buildingWindow from "@/components/window";
 import happyHolidays from "@/components/happyHolidays";
 import logo from "@/components/logo";
+import xIcon from '@/components/xIcon'
 import scrollBuddy from "@/assets/scripts/scrollBuddy";
 import gsap from 'gsap'
 export default {
@@ -82,7 +84,8 @@ export default {
     viewFinder,
     logo,
     happyHolidays,
-    makeItSnow
+    makeItSnow,
+    xIcon
   },
   data(){
     return{
@@ -96,8 +99,8 @@ export default {
   methods:{
     setImage(img){
 
-      window.addEventListener('click', this.unsetImage)
       this.image = img
+      window.addEventListener('click', this.unsetImage)
 
       this.$nextTick(()=>{
         let tl = gsap.timeline()
@@ -109,7 +112,6 @@ export default {
     unsetImage(){
 
       window.removeEventListener('click', this.unsetImage)
-
       let tl = gsap.timeline()
       tl.to('#image',.25,{opacity:0})
       tl.to('#scene', .25,{opacity: 1,pointerEvents:""},0)
@@ -214,6 +216,17 @@ html {
   justify-content: center;
   align-items: center;
   padding: 5% 0px;
+}
+
+#image .close{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 30vw;
+  height: 30vw;
+  max-height: 150px;
+  max-width: 150px;
+  fill: white;
 }
 
 #image img{

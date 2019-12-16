@@ -65,7 +65,7 @@ export default {
 
 @media screen and (max-width: 600px){
   .bulb{
-    height: 60px;
+    height: 12vw;
   }
 }
 </style>

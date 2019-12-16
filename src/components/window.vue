@@ -126,7 +126,7 @@ export default {
 
 @media screen and (max-width: 600px) {
   .window {
-    padding: 15% 10%;
+    padding: 25% 10%;
     flex: 0 0 100%;
   }
 
