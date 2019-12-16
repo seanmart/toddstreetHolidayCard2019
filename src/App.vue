@@ -56,7 +56,7 @@
       </div>
     </div>
     <div v-if="image" id="image">
-      <x-icon class="close" @click="unsetImage"/>
+      <x-icon class="close" @click.native="unsetImage"/>
       <img :src="require(`@/assets/${image}`)"/>
     </div>
     <make-it-snow />
