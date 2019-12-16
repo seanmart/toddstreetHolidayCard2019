@@ -8,8 +8,8 @@
       </div>
       <div id="greeting">
         <div class="content scroll-item" data-speed="-.2">
-          <happy-holidays class="happy-holidays"/>
           <logo class="logo" />
+          <happy-holidays class="happy-holidays"/>
           <p>
             Click inside the windows of our Holiday house for a few festive
             scenes. Some might even be similar to your own!
@@ -49,6 +49,7 @@
       </div>
       <div id="bottom">
         <div class="sidewalk">
+          <img class="snowpile" :src="img('snowPile.svg')"/>
           <div class="top"/>
           <div class="side"/>
         </div>
@@ -97,6 +98,9 @@ export default {
     scrollBuddy();
   },
   methods:{
+    img(i){
+      return require(`@/assets/${i}`)
+    },
     setImage(img){
 
       this.image = img
@@ -183,7 +187,7 @@ export default {
 html {
   background: #74bfde;
   font-family: "Roboto Slab", serif;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 * {
@@ -224,8 +228,8 @@ html {
   left: 20px;
   width: 30vw;
   height: 30vw;
-  max-height: 150px;
-  max-width: 150px;
+  max-height:90px;
+  max-width: 90px;
   fill: white;
   z-index: 1;
 }
@@ -276,25 +280,28 @@ html {
 }
 
 #greeting {
+  z-index: 10;
   position: absolute;
   top: 0px;
-  height: 60vh;
+  height: 80vh;
   width: 100%;
-  padding: 2vw;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #greeting .content {
-  width: 70vw;
+  flex: 0 0 auto;
+  width: 90vw;
+  max-width: 700px;
   text-align: center;
 }
 
 #greeting .logo {
   fill: white;
-  margin-bottom: 2vw;
-  display: none;
+  margin-bottom: 10%;
+  width: 200px;
+  max-width: 80vw;
 }
 
 #greeting .happy-holidays{
@@ -305,9 +312,8 @@ html {
 
 #greeting p{
   color: white;
-  font-size: calc(13px + 1vw);
+  font-size: calc(12px + .8vw);
   display: inline-block;
-  max-width: 600px;
 }
 
 #buildings {
@@ -359,6 +365,18 @@ html {
   z-index: 1;
 }
 
+#bottom .sidewalk{
+  position: relative;
+}
+
+#bottom .sidewalk .snowpile{
+  position: absolute;
+  left: 50%;
+  top: -50%;
+  width: 500px;
+  max-width: 50vw;
+}
+
 #bottom .sidewalk .top{
   height:15vh;
   width: 100%;
@@ -374,7 +392,8 @@ html {
 }
 
 #bottom .road{
-  height: 30vh;
+  height: 50vh;
+  min-height: 400px;
   width: 100%;
   background: rgb(255,255,255);
   background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 87%, rgba(186,210,255,1) 100%);

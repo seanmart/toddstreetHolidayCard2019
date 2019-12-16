@@ -2,6 +2,7 @@
 
   <div class="building">
     <slot name="roof"/>
+    <img :src="img('snowPile.svg')" class="scroll-item snow" data-speed=".05"/>
     <div class="front" :style="{background: me.front}">
       <div class="brick"/>
       <div class="roof" :style="{backgroundColor: me.roofFront}"/>
@@ -33,6 +34,11 @@ export default {
   components:{roofArch,roofSnow},
   props:{
     props: Object
+  },
+  methods:{
+    img(i){
+      return require(`@/assets/${i}`)
+    }
   },
   computed:{
     me(){
@@ -69,12 +75,11 @@ export default {
   z-index: 1;
 }
 
-.building .roof-snow{
+.building .snow{
   position: absolute;
-  top: -10px;
-  margin:0px -30px 0%;
-  fill: white;
-  z-index: 2;
+  width: 300px;
+  top: -50px;
+  right: 0px;
 }
 
 .building .roof-shadow{

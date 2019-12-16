@@ -6,7 +6,7 @@
           <div class="shadow" />
           <div class="content" :style="windowStyle" />
         </div>
-        <windowSnow class="snow" />
+        <img :src="img(`windowSnow.svg`)" class="window-snow" />
         <lights v-if="lights"/>
         <bulbs v-if="bulbs"/>
       </div>
@@ -18,9 +18,8 @@
 import gsap from 'gsap'
 import lights from '@/components/lights'
 import bulbs from '@/components/bulbs'
-import windowSnow from "@/components/windowSnow";
 export default {
-  components: { windowSnow,lights,bulbs },
+  components: { lights,bulbs },
   props: {
     lights: {type: Boolean, default: false},
     bulbs: {type: Boolean, default: false},
@@ -31,12 +30,15 @@ export default {
   computed: {
     windowStyle() {
       let styles = {}
-      if (this.image) styles.backgroundImage = `url(${require("@/assets/" + this.image)})`
+      if (this.image) styles.backgroundImage = `url(${this.img(this.image)})`
       if (this.color) styles.backgroundColor = this.color
       return styles
     }
   },
   methods: {
+    img(i){
+      return require(`@/assets/${i}`)
+    },
     selected(e) {
       e.stopImmediatePropagation();
       this.$emit('selected', this.image || null)
@@ -114,7 +116,7 @@ export default {
   z-index: 0;
 }
 
-.window .snow {
+.window .window-snow {
   fill: white;
   position: absolute;
   top: 95%;
