@@ -299,20 +299,20 @@ html {
 
 #greeting .logo {
   fill: white;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   width: 200px;
-  max-width: 80vw;
+  max-width: 40vw;
 }
 
 #greeting .happy-holidays{
   fill: white;
   width: 100%;
-  margin-bottom: 2vw;
+  margin-bottom: 10%;
 }
 
 #greeting p{
   color: white;
-  font-size: calc(12px + .8vw);
+  font-size: calc(14px + .6vw);
   display: inline-block;
 }
 
@@ -374,7 +374,6 @@ html {
   left: 50%;
   top: -50%;
   width: 500px;
-  max-width: 50vw;
 }
 
 #bottom .sidewalk .top{
