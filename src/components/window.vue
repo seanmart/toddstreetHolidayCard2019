@@ -7,8 +7,8 @@
           <div class="content" :style="windowStyle" />
         </div>
         <img :src="img(`windowSnow.svg`)" class="window-snow" />
-        <lights v-if="lights"/>
-        <bulbs v-if="bulbs"/>
+        <lights v-if="effect" class="lights"/>
+        <bulbs v-if="effect" class="bulbs"/>
       </div>
     </div>
   </div>
@@ -21,11 +21,10 @@ import bulbs from '@/components/bulbs'
 export default {
   components: { lights,bulbs },
   props: {
-    lights: {type: Boolean, default: false},
-    bulbs: {type: Boolean, default: false},
     image: { type: String, default: null },
     color: { type: String, default: null },
-    border: { type: String, default: "#aaa" }
+    border: { type: String, default: "#aaa" },
+    effect:{type: Boolean, default: false}
   },
   computed: {
     windowStyle() {
@@ -88,9 +87,6 @@ export default {
   bottom: -1px;
 }
 
-.window .shadow {
-  box-shadow: inset 10px 10px 0px rgba(0, 0, 0, 0.3);
-}
 
 .window .content {
   background-size: cover;
@@ -125,11 +121,31 @@ export default {
   z-index: 1;
 }
 
+@media screen and (min-width: 601px){
+  .window:nth-child(4n + 1) .bulbs,
+  .window:nth-child(4n + 4) .bulbs{
+    display: none;
+  }
+
+  .window:nth-child(4n + 2) .lights,
+  .window:nth-child(4n + 3) .lights{
+    display: none;
+  }
+}
+
 
 @media screen and (max-width: 600px) {
   .window {
     padding: 25% 10%;
     flex: 0 0 100%;
+  }
+
+  .window:nth-child(2n + 1) .bulbs{
+    display: none;
+  }
+
+  .window:nth-child(2n + 2) .lights{
+    display: none;
   }
 
   .window .wrapper{

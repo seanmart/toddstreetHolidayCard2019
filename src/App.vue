@@ -32,11 +32,10 @@
           <template v-for="(item, i) in images">
             <building-window
               :key="i"
-              :lights="item.effect ==='lights'"
-              :bulbs="item.effect ==='bulbs'"
               :image="item.image"
               :border="mainBuilding.roofArchSide"
               @selected="setImage($event)"
+              effect
             />
           </template>
         </building>
@@ -57,7 +56,7 @@
       </div>
     </div>
     <div v-if="image" id="image">
-      <x-icon class="close" @click.native="unsetImage"/>
+      <x-icon id="close" @click.native="unsetImage"/>
       <img :src="require(`@/assets/${image}`)"/>
     </div>
     <make-it-snow />
@@ -109,8 +108,10 @@ export default {
       this.$nextTick(()=>{
         let tl = gsap.timeline()
         tl.set('#image',{scale:.9})
+        tl.set('#close', {opacity: 0})
         tl.to('#scene',.5,{opacity:0, pointerEvents: 'none'})
         tl.to('#image',.25,{opacity:1, scale: 1},0)
+        tl.to('#close', .25,{opacity:1},.25)
       })
     },
     unsetImage(){
@@ -125,13 +126,13 @@ export default {
   computed: {
     images() {
       return [
-        {image:"images/delivery.jpg", effect: 'lights'},
-        {image:"images/movie.jpg", effect: 'bulbs'},
-        {image:"images/flour.jpg", effect: 'bulbs'},
-        {image:"images/august.jpg", effect: 'lights'},
-        {image:"images/peeling.jpg", effect: 'lights'},
-        {image:"images/roof.png", effect: 'bulbs'},
-        {image:"images/roasting.jpg", effect: 'bulbs'},
+        {image:"images/delivery.jpg"},
+        {image:"images/movie.jpg"},
+        {image:"images/flour.jpg"},
+        {image:"images/august.jpg"},
+        {image:"images/peeling.jpg"},
+        {image:"images/roof.png"},
+        {image:"images/roasting.jpg"},
       ];
     },
     leftBuilding() {
@@ -222,7 +223,7 @@ html {
   padding: 5% 0px;
 }
 
-#image .close{
+#close{
   position: absolute;
   top: 20px;
   left: 20px;
@@ -371,9 +372,11 @@ html {
 
 #bottom .sidewalk .snowpile{
   position: absolute;
-  left: 50%;
-  top: -50%;
-  width: 500px;
+  left: 30%;
+  top: 0px;
+  transform: translateY(-50%);
+  width: 100vw;
+  min-width: 600px;
 }
 
 #bottom .sidewalk .top{
