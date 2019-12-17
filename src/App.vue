@@ -54,7 +54,7 @@
           <div class="side"/>
         </div>
         <div class="road">
-          <h1>From Our toddstreet House to Yours,</h1>
+          <span>From Our toddstreet House to Yours,</span>
           <img :src="img('happyHolidaysBlue.svg')"/>
         </div>
       </div>
@@ -115,14 +115,17 @@ export default {
       return require(`@/assets/${i}`)
     },
     setImage(id){
-      this.selected = id
+
+      let tl1 = gsap.timeline()
+      tl1.set('#lightbox .images',{scale:.9},0)
+      tl1.set('#lightbox .message',{scale: .5,opacity: 0},0)
+      tl1.call(()=> this.selected = id)
+
       this.$nextTick(()=>{
-        let tl = gsap.timeline()
-        tl.set('#lightbox .images',{scale:.9})
-        tl.set('#lightbox .message',{scale: .5,opacity: 0})
-        tl.to('#scene',.5,{opacity:0})
-        tl.to('#lightbox .images',.25,{opacity:1, scale: 1},0)
-        tl.to('#lightbox .message',.25,{opacity: 1, scale: 1},.5)
+        let tl2 = gsap.timeline()
+        tl2.to('#scene',.5,{opacity:0})
+        tl2.to('#lightbox .images',.25,{opacity:1, scale: 1},0)
+        tl2.to('#lightbox .message',.25,{opacity: 1, scale: 1},.5)
       })
     },
     unsetImage(){
@@ -182,6 +185,20 @@ export default {
           message:{
             image: "images/roasting-message.svg",
             position: {bottom: '5%', right: '5%', width: '60%'}
+          }
+        },
+        {
+          art:"images/latke-art.jpg",
+          message:{
+            image: "images/latke-message.svg",
+            position: {top: '5%', right: '5%', width: '45%'}
+          }
+        },
+        {
+          art:"images/busy-art.jpg",
+          message:{
+            image: "images/busy-message.svg",
+            position: {bottom: '5%', left: '5%', width: '45%'}
           }
         },
       ];
@@ -360,7 +377,7 @@ html {
 
 #greeting .content {
   flex: 0 0 auto;
-  width: 80vw;
+  width: 50vw;
   max-width: 500px;
   text-align: center;
 }
@@ -369,12 +386,14 @@ html {
   fill: white;
   width: 200px;
   max-width: 30vw;
+  max-height: 4vh;
 }
 
 #greeting .happy-holidays{
   fill: white;
   width: 100%;
   margin: 5% 0px;
+  max-height: 30vh;
 }
 
 #greeting p{
@@ -414,15 +433,16 @@ html {
   right: 3%;
   height: 30vw;
   max-height: 300px;
+  max-height: 50vh;
   z-index: 1;
 }
 
 .building.main .view-finder {
   position: absolute;
   bottom: 100%;
-  right: 17%;
+  right: 18%;
   height: 15vw;
-  max-height: 100px;
+  max-height: 20vh;
   z-index: 1;
   fill: #2f4155;
 }
@@ -460,7 +480,6 @@ html {
 }
 
 #bottom .road{
-  height: 80vh;
   min-height: 400px;
   width: 100%;
   background: rgb(255,255,255);
@@ -469,15 +488,16 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10vw;
+  padding: 20vw 0px;
 }
 
-#bottom .road h1{
-  margin-bottom: 5%;
+#bottom .road span{
+  margin-bottom: 5vw;
+  font-size: calc(14px + .5vw);
 }
 
 #bottom .road img{
-  width: 60vw;
+  width: 80vw;
   max-width: 500px;
 }
 
@@ -488,6 +508,10 @@ html {
 
   #greeting {
     height: 60vh;
+  }
+
+  #greeting .content{
+    width: 80vw;
   }
 
   #skyline .art {
