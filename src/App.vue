@@ -102,7 +102,6 @@ export default {
       return require(`@/assets/${i}`)
     },
     setImage(img){
-
       this.selectedImage = img
 
       this.$nextTick(()=>{
