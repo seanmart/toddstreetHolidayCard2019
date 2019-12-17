@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="window" @click="selected" v-touch-class="'active'">
+  <div class="window" v-touch="selected">
     <div class="outer-wrapper" ref="wrapper">
       <div class="wrapper" :style="{ outlineColor: border }" ref="content">
         <div class="inner-wrapper">
@@ -52,10 +52,6 @@ export default {
   height: auto;
   padding: 8%;
   transition: transform .25s;
-}
-
-.window.active{
-  transform: scale(.9)
 }
 
 .window:before {
@@ -143,6 +139,10 @@ export default {
   .window {
     padding: 25% 10%;
     flex: 0 0 100%;
+  }
+
+  .window.active{
+    transform: scale(.9)
   }
 
   .window:nth-child(2n + 1) .bulbs{

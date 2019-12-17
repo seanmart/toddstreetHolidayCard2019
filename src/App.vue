@@ -56,7 +56,6 @@
       </div>
     </div>
     <div id="image" :class="{show: selectedImage}" @click="unsetImage">
-      <x-icon id="close" @click.native="unsetImage"/>
       <template v-for="(item,i) in images">
       <img
         :key="i"
@@ -77,7 +76,6 @@ import viewFinder from '@/components/viewFinder'
 import makeItSnow from "@/components/makeItSnow";
 import buildingWindow from "@/components/window";
 import logo from "@/components/logo";
-import xIcon from '@/components/xIcon'
 import scrollBuddy from "@/assets/scripts/scrollBuddy";
 import gsap from 'gsap'
 export default {
@@ -88,8 +86,7 @@ export default {
     waterTower,
     viewFinder,
     logo,
-    makeItSnow,
-    xIcon
+    makeItSnow
   },
   data(){
     return{
