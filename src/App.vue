@@ -54,8 +54,12 @@
           <div class="side"/>
         </div>
         <div class="road">
-          <span>From Our toddstreet House to Yours,</span>
-          <img :src="img('happyHolidaysBlue.svg')"/>
+          <div class="content">
+            <img :src="img('frame.svg')" class="frame left"/>
+            <span>From Our toddstreet House to Yours,</span>
+            <img :src="img('happyHolidaysBlue.svg')" class="happy-holidays"/>
+            <img :src="img('frame.svg')" class="frame right"/>
+          </div>
         </div>
       </div>
     </div>
@@ -199,6 +203,13 @@ export default {
           message:{
             image: "images/busy-message.svg",
             position: {bottom: '5%', left: '5%', width: '45%'}
+          }
+        },
+        {
+          art:"images/cookies-art.jpg",
+          message:{
+            image: "images/cookies-message.svg",
+            position: {top: '35%', right: '5%', width: '40%'}
           }
         },
       ];
@@ -484,21 +495,43 @@ html {
   width: 100%;
   background: rgb(255,255,255);
   background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 87%, rgba(186,210,255,1) 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding: 20vw 0px;
 }
 
+#bottom .road .content{
+  display: inline-block;
+  position: relative;
+  padding: 5vw;
+  width: 80vw;
+  max-width: 600px;
+}
+
+
 #bottom .road span{
+  display: block;
   margin-bottom: 5vw;
   font-size: calc(14px + .5vw);
 }
 
-#bottom .road img{
-  width: 80vw;
-  max-width: 500px;
+#bottom .road .happy-holidays{
+  display: block;
+  width: 100%;
+}
+
+#bottom .road .frame{
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  height: 100%;
+}
+
+#bottom .road .frame.left{
+  left: 0px;
+}
+
+#bottom .road .frame.right{
+  right: 0px;
+  transform: rotate(180deg);
 }
 
 @media screen and (max-width: 600px) {

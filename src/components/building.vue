@@ -137,7 +137,7 @@ export default {
   right: 0px;
   bottom: 0px;
   background-image: url('../assets/buildingTopBorder.svg');
-  background-size: 100px 100px;
+  background-size: 10vw 10vw;
 }
 
 @keyframes grow {
