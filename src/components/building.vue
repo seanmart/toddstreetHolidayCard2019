@@ -2,7 +2,7 @@
 
   <div class="building">
     <slot name="roof"/>
-    <img :src="img('snowPile.svg')" class="scroll-item snow" data-speed=".05"/>
+    <img :src="img('snowPile.svg')" class="scroll-item snow"/>
     <div class="front" :style="{background: me.front}">
       <div class="brick"/>
       <div class="roof" :style="{backgroundColor: me.roofFront}"/>
@@ -77,9 +77,10 @@ export default {
 
 .building .snow{
   position: absolute;
-  width: 300px;
-  top: -50px;
+  width: 50%;
+  top: -8vw;
   right: 0px;
+  animation: grow 100s;
 }
 
 .building .roof-shadow{
@@ -137,6 +138,11 @@ export default {
   bottom: 0px;
   background-image: url('../assets/buildingTopBorder.svg');
   background-size: 100px 100px;
+}
+
+@keyframes grow {
+  0%{transform: translateY(50%)}
+  100%{transform: translateY(0%)}
 }
 
 </style>

@@ -9,7 +9,7 @@
       <div id="greeting">
         <div class="content scroll-item" data-speed="-.2">
           <logo class="logo" />
-          <happy-holidays class="happy-holidays"/>
+          <img :src="img('happyHolidays.svg')" class="happy-holidays"/>
           <p>
             Click inside the windows of our Holiday house for a few festive
             scenes. Some might even be similar to your own!
@@ -32,7 +32,7 @@
           <template v-for="(item, i) in images">
             <building-window
               :key="i"
-              :image="item.image"
+              :image="item"
               :border="mainBuilding.roofArchSide"
               @selected="setImage($event)"
               effect
@@ -55,9 +55,15 @@
         <div class="road"/>
       </div>
     </div>
-    <div v-if="image" id="image">
+    <div id="image" :class="{show: selectedImage}" @click="unsetImage">
       <x-icon id="close" @click.native="unsetImage"/>
-      <img :src="require(`@/assets/${image}`)"/>
+      <template v-for="(item,i) in images">
+      <img
+        :key="i"
+        :src="require(`@/assets/${item}`)"
+        :class="{show: selectedImage === item}"
+        />
+    </template>
     </div>
     <make-it-snow />
   </div>
@@ -70,7 +76,6 @@ import waterTower from "@/components/waterTower";
 import viewFinder from '@/components/viewFinder'
 import makeItSnow from "@/components/makeItSnow";
 import buildingWindow from "@/components/window";
-import happyHolidays from "@/components/happyHolidays";
 import logo from "@/components/logo";
 import xIcon from '@/components/xIcon'
 import scrollBuddy from "@/assets/scripts/scrollBuddy";
@@ -83,13 +88,12 @@ export default {
     waterTower,
     viewFinder,
     logo,
-    happyHolidays,
     makeItSnow,
     xIcon
   },
   data(){
     return{
-      image: null
+      selectedImage: null
     }
   },
   mounted() {
@@ -102,37 +106,32 @@ export default {
     },
     setImage(img){
 
-      this.image = img
-      window.addEventListener('click', this.unsetImage)
+      this.selectedImage = img
 
       this.$nextTick(()=>{
         let tl = gsap.timeline()
         tl.set('#image',{scale:.9})
-        tl.set('#close', {opacity: 0})
-        tl.to('#scene',.5,{opacity:0, pointerEvents: 'none'})
+        tl.to('#scene',.5,{opacity:0})
         tl.to('#image',.25,{opacity:1, scale: 1},0)
-        tl.to('#close', .25,{opacity:1},.25)
       })
     },
     unsetImage(){
-
-      window.removeEventListener('click', this.unsetImage)
       let tl = gsap.timeline()
       tl.to('#image',.25,{opacity:0})
-      tl.to('#scene', .25,{opacity: 1,pointerEvents:""},0)
-      tl.add(()=>this.image = null)
+      tl.to('#scene', .25,{opacity: 1},0)
+      tl.add(()=>this.selectedImage = null)
     }
   },
   computed: {
     images() {
       return [
-        {image:"images/delivery.jpg"},
-        {image:"images/movie.jpg"},
-        {image:"images/flour.jpg"},
-        {image:"images/august.jpg"},
-        {image:"images/peeling.jpg"},
-        {image:"images/roof.png"},
-        {image:"images/roasting.jpg"},
+        "images/delivery.jpg",
+        "images/movie.jpg",
+        "images/flour.jpg",
+        "images/august.jpg",
+        "images/peeling.jpg",
+        "images/roof.png",
+        "images/roasting.jpg"
       ];
     },
     leftBuilding() {
@@ -203,7 +202,7 @@ html {
 
 #scene {
   width: 100vw;
-  padding-top: 80vh;
+  padding-top: 85vh;
   overflow: hidden;
   position: relative;
   text-align: center;
@@ -221,6 +220,11 @@ html {
   justify-content: center;
   align-items: center;
   padding: 5% 0px;
+  display: none;
+}
+
+#image.show{
+  display: flex;
 }
 
 #close{
@@ -239,6 +243,11 @@ html {
   flex: 0 0 auto;
   max-width: 100%;
   max-height: 100%;
+  display: none;
+}
+
+#image img.show{
+  display: block;
 }
 
 #sky {
@@ -293,27 +302,26 @@ html {
 
 #greeting .content {
   flex: 0 0 auto;
-  width: 90vw;
-  max-width: 700px;
+  width: 80vw;
+  max-width: 500px;
   text-align: center;
 }
 
 #greeting .logo {
   fill: white;
-  margin-bottom: 5%;
   width: 200px;
-  max-width: 40vw;
+  max-width: 30vw;
 }
 
 #greeting .happy-holidays{
   fill: white;
   width: 100%;
-  margin-bottom: 10%;
+  margin: 5% 0px;
 }
 
 #greeting p{
   color: white;
-  font-size: calc(14px + .6vw);
+  font-size: calc(14px + .5vw);
   display: inline-block;
 }
 
@@ -403,7 +411,7 @@ html {
 
 @media screen and (max-width: 600px) {
   #scene {
-    padding-top: 70vh;
+    padding-top: 75vh;
   }
 
   #greeting {

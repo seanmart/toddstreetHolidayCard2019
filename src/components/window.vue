@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="window" @click="selected">
+  <div class="window" @click="selected" v-touch-class="'active'">
     <div class="outer-wrapper" ref="wrapper">
       <div class="wrapper" :style="{ outlineColor: border }" ref="content">
         <div class="inner-wrapper">
@@ -51,6 +51,11 @@ export default {
   flex: 0 0 50%;
   height: auto;
   padding: 8%;
+  transition: transform .25s;
+}
+
+.window.active{
+  transform: scale(.9)
 }
 
 .window:before {
