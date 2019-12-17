@@ -32,7 +32,8 @@
           <template v-for="(item, i) in images">
             <building-window
               :key="i"
-              :image="item"
+              :image="item.art"
+              :imageId="i"
               :border="mainBuilding.roofArchSide"
               @selected="setImage($event)"
               effect
@@ -52,17 +53,29 @@
           <div class="top"/>
           <div class="side"/>
         </div>
-        <div class="road"/>
+        <div class="road">
+          <h1>From Our toddstreet House to Yours,</h1>
+          <img :src="img('happyHolidaysBlue.svg')"/>
+        </div>
       </div>
     </div>
-    <div id="image" :class="{show: selectedImage}" @click="unsetImage">
-      <template v-for="(item,i) in images">
-      <img
-        :key="i"
-        :src="require(`@/assets/${item}`)"
-        :class="{show: selectedImage === item}"
-        />
-    </template>
+    <div id="lightbox" :class="{show: selected !== null}" v-touch @click="unsetImage">
+      <div class="images">
+        <div
+          v-for="(item,i) in images"
+          :key="i"
+          class="image"
+          :class="{show: selected === i}"
+          >
+            <img v-if="item.art" :src="img(item.art)" class="art">
+            <img
+            v-if="item.message"
+            :src="img(item.message.image)"
+            :style="item.message.position || {left: 0, top: 0}"
+            class="message"
+            />
+        </div>
+      </div>
     </div>
     <make-it-snow />
   </div>
@@ -90,7 +103,7 @@ export default {
   },
   data(){
     return{
-      selectedImage: null
+      selected: null
     }
   },
   mounted() {
@@ -101,33 +114,76 @@ export default {
     img(i){
       return require(`@/assets/${i}`)
     },
-    setImage(img){
-      this.selectedImage = img
-
+    setImage(id){
+      this.selected = id
       this.$nextTick(()=>{
         let tl = gsap.timeline()
-        tl.set('#image',{scale:.9})
+        tl.set('#lightbox .images',{scale:.9})
+        tl.set('#lightbox .message',{scale: .5,opacity: 0})
         tl.to('#scene',.5,{opacity:0})
-        tl.to('#image',.25,{opacity:1, scale: 1},0)
+        tl.to('#lightbox .images',.25,{opacity:1, scale: 1},0)
+        tl.to('#lightbox .message',.25,{opacity: 1, scale: 1},.5)
       })
     },
     unsetImage(){
       let tl = gsap.timeline()
-      tl.to('#image',.25,{opacity:0})
+      tl.to('#lightbox .images',.25,{opacity:0})
       tl.to('#scene', .25,{opacity: 1},0)
-      tl.add(()=>this.selectedImage = null)
+      tl.add(()=>this.selected = null)
     }
   },
   computed: {
     images() {
       return [
-        "images/delivery.jpg",
-        "images/movie.jpg",
-        "images/flour.jpg",
-        "images/august.jpg",
-        "images/peeling.jpg",
-        "images/roof.png",
-        "images/roasting.jpg"
+        {
+          art:"images/delivery-art.jpg",
+          message:{
+            image: "images/delivery-message.svg",
+            position: {right: '5%', bottom: '8%', width: '40%'}
+          }
+        },
+        {
+          art:"images/movie-art.jpg",
+          message:{
+            image: "images/movie-message.svg",
+            position: {top: '5%', left: '5%', width: '90%'}
+          }
+        },
+        {
+          art:"images/flour-art.jpg",
+          message:{
+            image: "images/flour-message.svg",
+            position: {left: '5%', bottom: '5%', width: '45%'}
+          }
+        },
+        {
+          art:"images/august-art.jpg",
+          message:{
+            image: "images/august-message.svg",
+            position: {top: '5%', right: '5%', width: '30%'}
+          }
+        },
+        {
+          art:"images/peeling-art.jpg",
+          message:{
+            image: "images/peeling-message.svg",
+            position: {bottom: '5%', left: '5%', width: '90%'}
+          }
+        },
+        {
+          art:"images/roof-art.jpg",
+          message:{
+            image: "images/roof-message.svg",
+            position: {bottom: '15%', right: '7%', width: '40%'}
+          }
+        },
+        {
+          art:"images/roasting-art.jpg",
+          message:{
+            image: "images/roasting-message.svg",
+            position: {bottom: '5%', right: '5%', width: '60%'}
+          }
+        },
       ];
     },
     leftBuilding() {
@@ -192,6 +248,7 @@ html {
   box-sizing: border-box;
 }
 
+
 #page{
   opacity: 0;
 }
@@ -204,47 +261,52 @@ html {
   text-align: center;
 }
 
-#image{
+#lightbox{
   position: fixed;
   z-index: 20;
   top: 0px;
   left: 0px;
   bottom: 0px;
   right: 0px;
-  opacity: 0;
+  display: none;
+  transition: transform .25s;
+}
+
+#lightbox.active{
+  transform: scale(.95)
+}
+
+#lightbox.show{
+  display: block;
+}
+
+#lightbox .images{
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5% 0px;
-  display: none;
 }
 
-#image.show{
-  display: flex;
-}
-
-#close{
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 30vw;
-  height: 30vw;
-  max-height:90px;
-  max-width: 90px;
-  fill: white;
-  z-index: 1;
-}
-
-#image img{
+#lightbox .image{
   flex: 0 0 auto;
-  max-width: 100%;
-  max-height: 100%;
   display: none;
+  position: relative;
 }
 
-#image img.show{
+#lightbox .image.show{
   display: block;
 }
+
+#lightbox .art{
+  max-height: 90vh;
+  max-width: 100vw;
+}
+
+#lightbox .message{
+  position: absolute;
+}
+
 
 #sky {
   position: fixed;
@@ -398,11 +460,25 @@ html {
 }
 
 #bottom .road{
-  height: 50vh;
+  height: 80vh;
   min-height: 400px;
   width: 100%;
   background: rgb(255,255,255);
   background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 87%, rgba(186,210,255,1) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10vw;
+}
+
+#bottom .road h1{
+  margin-bottom: 5%;
+}
+
+#bottom .road img{
+  width: 60vw;
+  max-width: 500px;
 }
 
 @media screen and (max-width: 600px) {

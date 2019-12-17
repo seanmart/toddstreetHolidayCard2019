@@ -3,9 +3,9 @@
   <div class="building">
     <slot name="roof"/>
     <img :src="img('snowPile.svg')" class="scroll-item snow"/>
-    <div class="front" :style="{background: me.front}">
+    <div class="front outline" :style="{background: me.front}">
       <div class="brick"/>
-      <div class="roof" :style="{backgroundColor: me.roofFront}"/>
+      <div class="roof outline" :style="{backgroundColor: me.roofFront}"/>
       <div class="roof-shadow" :style="{backgroundColor: me.roofFrontShadow}">
         <roof-arch
         v-for="i in me.arches"
@@ -18,9 +18,9 @@
         <slot/>
       </div>
     </div>
-    <div class="side" :style="{background: me.side}">
+    <div class="side outline" :style="{background: me.side}">
       <div class="brick"/>
-      <div class="roof" :style="{backgroundColor: me.roofSide}"/>
+      <div class="roof outline" :style="{backgroundColor: me.roofSide}"/>
       <div class="roof-shadow" :style="{backgroundColor: me.roofSideShadow}"/>
     </div>
   </div>

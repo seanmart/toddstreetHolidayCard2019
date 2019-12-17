@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="window" @click.stop="selected" v-touch >
-    <div class="outer-wrapper" ref="wrapper">
+    <div class="outer-wrapper outline" ref="wrapper">
       <div class="wrapper" :style="{ outlineColor: border }" ref="content">
         <div class="inner-wrapper">
           <div class="shadow" />
@@ -22,6 +22,7 @@ export default {
   components: { lights,bulbs },
   props: {
     image: { type: String, default: null },
+    imageId: {type: Number, defualt: null},
     color: { type: String, default: null },
     border: { type: String, default: "#aaa" },
     effect:{type: Boolean, default: false}
@@ -39,7 +40,7 @@ export default {
       return require(`@/assets/${i}`)
     },
     selected() {
-      this.$emit('selected', this.image || null)
+      this.$emit('selected', this.imageId)
     }
   }
 };
@@ -65,11 +66,13 @@ export default {
 
 .window .outer-wrapper{
   height: 100%;
+  outline-offset: 0px;
 }
 
 .window .wrapper {
   outline-width: 1.2vw;
   outline-style: solid;
+  outline-offset: -1.2vw;
   height: 100%;
   position: relative;
   z-index: 1;

@@ -156,7 +156,7 @@ export default {
   height: 100%;
 }
 .string{
-  fill:#1A4201;
+  fill:#39648e;
 }
 .light{
   fill:#fffbcf;
