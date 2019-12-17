@@ -50,8 +50,9 @@ export default {
 .window {
   flex: 0 0 50%;
   height: auto;
-  padding: 8%;
   transition: transform .25s;
+  position: relative;
+  margin-bottom: 5vw;
 }
 
 .window.active{
@@ -65,7 +66,11 @@ export default {
 }
 
 .window .outer-wrapper{
-  height: 100%;
+  position: absolute;
+  top: 4vw;
+  left: 4vw;
+  bottom: 4vw;
+  right: 4vw;
   outline-offset: 0px;
 }
 
@@ -143,8 +148,8 @@ export default {
 
 @media screen and (max-width: 600px) {
   .window {
-    padding: 25% 10%;
     flex: 0 0 100%;
+    margin-bottom: 15vw;
   }
 
   .window:nth-child(2n + 1) .bulbs{

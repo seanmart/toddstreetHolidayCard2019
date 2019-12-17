@@ -100,7 +100,9 @@ export default {
 .building .windows{
   display: flex;
   flex-wrap: wrap;
-  padding: 7% 7% 25%;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 7% 7% 0%;
 }
 
 .building .ground-floor{
@@ -111,13 +113,6 @@ export default {
   width: 100%;
   padding: 10%;
   padding-bottom: 0px;
-}
-
-.building .door{
-  box-shadow: inset 10px 10px 0px rgba(0, 0, 0, 0.3);
-  background: black;
-  width: 100%;
-  height: 100%;
 }
 
 .building .front{

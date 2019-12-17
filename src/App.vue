@@ -34,11 +34,15 @@
               :key="i"
               :image="item.art"
               :imageId="i"
-              :border="mainBuilding.roofArchSide"
+              :border="mainBuilding.border"
               @selected="setImage($event)"
               effect
             />
           </template>
+          <buildingDoor 
+          :border="mainBuilding.border"
+          :background="mainBuilding.door"
+          />
         </building>
 
         <building class="right" :props="rightBuilding">
@@ -53,14 +57,7 @@
           <div class="top"/>
           <div class="side"/>
         </div>
-        <div class="road">
-          <div class="content">
-            <img :src="img('frame.svg')" class="frame left"/>
-            <span>From Our toddstreet House to Yours,</span>
-            <img :src="img('happyHolidaysBlue.svg')" class="happy-holidays"/>
-            <img :src="img('frame.svg')" class="frame right"/>
-          </div>
-        </div>
+        <div class="road"/>
       </div>
     </div>
     <div id="lightbox" :class="{show: selected !== null}" v-touch @click="unsetImage">
@@ -92,6 +89,7 @@ import waterTower from "@/components/waterTower";
 import viewFinder from '@/components/viewFinder'
 import makeItSnow from "@/components/makeItSnow";
 import buildingWindow from "@/components/window";
+import buildingDoor from '@/components/door'
 import logo from "@/components/logo";
 import scrollBuddy from "@/assets/scripts/scrollBuddy";
 import gsap from 'gsap'
@@ -99,6 +97,7 @@ export default {
   components: {
     building,
     buildingWindow,
+    buildingDoor,
     skyline,
     waterTower,
     viewFinder,
@@ -212,6 +211,13 @@ export default {
             position: {top: '35%', right: '5%', width: '40%'}
           }
         },
+        {
+          art:"images/mom-art.jpg",
+          message:{
+            image: "images/mom-message.svg",
+            position: {bottom: '5%', left: '5%', width: '35%'}
+          }
+        },
       ];
     },
     leftBuilding() {
@@ -240,7 +246,9 @@ export default {
         roofSide: "#5f85af",
         roofSideShadow: "rgba(0,0,0,.4)",
         roofArchFront: "#d9f1fb",
-        roofArchSide: "#5f85af"
+        roofArchSide: "#5f85af",
+        border: "#5f85af",
+        door: '#436183'
       };
     },
     rightBuilding() {
@@ -491,48 +499,12 @@ html {
 }
 
 #bottom .road{
-  min-height: 400px;
+  height: 30vw;
   width: 100%;
   background: rgb(255,255,255);
   background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 87%, rgba(186,210,255,1) 100%);
-  padding: 20vw 0px;
 }
 
-#bottom .road .content{
-  display: inline-block;
-  position: relative;
-  padding: 5vw;
-  width: 80vw;
-  max-width: 600px;
-}
-
-
-#bottom .road span{
-  display: block;
-  margin-bottom: 5vw;
-  font-size: calc(14px + .5vw);
-}
-
-#bottom .road .happy-holidays{
-  display: block;
-  width: 100%;
-}
-
-#bottom .road .frame{
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  height: 100%;
-}
-
-#bottom .road .frame.left{
-  left: 0px;
-}
-
-#bottom .road .frame.right{
-  right: 0px;
-  transform: rotate(180deg);
-}
 
 @media screen and (max-width: 600px) {
   #scene {
