@@ -56,6 +56,17 @@ export default {
     50%{ transform: rotate(2deg); }
   }
 
+  @media screen and (max-width: 600px){
+    .door{
+      flex: 0 0 100%;
+      height: 100vw;
+    }
+
+    .door .content{
+      outline-width: 10px;
+    }
+  }
+
 
 
 </style>
