@@ -427,9 +427,12 @@ html {
   fill: white;
   width: 200px;
   max-width: 30vw;
-  max-height: 4vh;
   display: inline-block;
   overflow: hidden;
+}
+
+#greeting .logo svg{
+  max-height: 4vh;
 }
 
 #greeting .happy-holidays{
@@ -557,6 +560,22 @@ html {
 
   .building.main .view-finder{
     right: 20%;
+  }
+}
+
+@media screen and (max-height: 500px){
+  #scene{
+    padding-top: 105vh;
+  }
+
+  #greeting{
+    margin-top: 15vh;
+  }
+
+  #greeting .arrow{
+    top: 110%;
+    height: 7vh;
+    min-height:inherit;
   }
 }
 
