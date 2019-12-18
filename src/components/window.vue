@@ -108,10 +108,6 @@ export default {
   transition: transform 0.25s ease;
 }
 
-.window .wrapper:hover .content{
-  transform: scale(1.1)
-}
-
 .window .lights{
   position: absolute;
   top: -5%;
@@ -147,6 +143,10 @@ export default {
   .window:nth-child(4n + 2) .lights,
   .window:nth-child(4n + 3) .lights{
     display: none;
+  }
+
+  .window .wrapper:hover .content{
+    transform: scale(1.1)
   }
 }
 
