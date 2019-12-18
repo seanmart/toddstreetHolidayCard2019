@@ -23,7 +23,7 @@
       </div>
       <div id="buildings">
         <building class="left" :props="leftBuilding">
-          <template v-for="i in images.length - 2">
+          <template v-for="i in images.length">
             <building-window :key="i" color="#777" />
           </template>
         </building>
@@ -51,7 +51,7 @@
         </building>
 
         <building class="right" :props="rightBuilding">
-          <template v-for="i in images.length - 2">
+          <template v-for="i in images.length">
             <building-window :key="i" color="#777" />
           </template>
         </building>
@@ -162,6 +162,13 @@ export default {
           message:{
             image: "images/roof-message.svg",
             position: {bottom: '15%', right: '7%', width: '40%'}
+          }
+        },
+        {
+          art:"images/negotiation-art.jpg",
+          message:{
+            image: "images/negotiation-message.svg",
+            position: {bottom: '5%', right: '4%', width: '50%'}
           }
         },
         {
@@ -430,6 +437,7 @@ html {
 
 #greeting .text{
   position: relative;
+  display: none;
 }
 
 #greeting .arrow{
