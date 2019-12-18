@@ -8,12 +8,16 @@
       </div>
       <div id="greeting">
         <div class="content scroll-item" data-speed="-.2">
-          <logo class="logo" />
+          <div class="logo">
+            <logo />
+          </div>
           <img :src="img('happyHolidays.svg')" class="happy-holidays"/>
-          <p>
-            Click inside the windows of our Holiday house for a few festive
-            scenes. Some might even be similar to your own!
-          </p>
+          <div class="text">
+            <p>
+              Click inside the windows of our Holiday house for a few festive
+              scenes. Some might even be similar to your own!
+            </p>
+          </div>
         </div>
       </div>
       <div id="buildings">
@@ -25,8 +29,8 @@
 
         <building class="main" :props="mainBuilding">
           <template v-slot:roof>
-            <water-tower class="water-tower" />
-            <view-finder class="view-finder"/>
+            <water-tower class="pop water-tower" />
+            <view-finder class="pop view-finder"/>
           </template>
 
           <template v-for="(item, i) in images">
@@ -39,7 +43,7 @@
               effect
             />
           </template>
-          <buildingDoor 
+          <buildingDoor
           :border="mainBuilding.border"
           :background="mainBuilding.door"
           />
@@ -110,7 +114,19 @@ export default {
     }
   },
   mounted() {
-    gsap.to('#page', 3,{opacity: 1, delay: .5})
+    let tl = gsap.timeline()
+    tl.fromTo('#greeting .logo svg', 1.5,{y: "100%"}, {y:0, ease: 'power4.out'},0)
+    tl.fromTo('#greeting .happy-holidays', 2,{scale: .5, opacity: 0},{scale: 1,opacity:1, ease: 'power4.out'},.85)
+    tl.fromTo('canvas', 1,{opacity: 0}, {opacity: 1},1.5)
+
+    let delay = 2.2
+
+    tl.to('#greeting', 1,{y: '-15vh', ease: 'power2.inOut'},delay)
+    tl.fromTo('#skyline',2,{opacity: 0, y: '-2%'}, {opacity: 1, y:0,ease: 'power4.out'},delay)
+    tl.fromTo('.building',1.5,{y:'40vh'},{y:0, stagger: .1,ease: 'power4.out'},delay)
+    tl.fromTo('.pop',1,{y:'100%'},{y:0, stagger: .1, ease: 'power4.out'},delay + .25)
+    tl.fromTo('#greeting .text', 1.5,{y: "5%",opacity: 0}, {y:0,opacity: 1,ease: 'power4.out'},delay + .9)
+
     scrollBuddy();
   },
   methods:{
@@ -284,11 +300,6 @@ html {
   box-sizing: border-box;
 }
 
-
-#page{
-  opacity: 0;
-}
-
 #scene {
   width: 100vw;
   padding-top: 85vh;
@@ -387,7 +398,7 @@ html {
   z-index: 10;
   position: absolute;
   top: 0px;
-  height: 80vh;
+  height: 100vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -406,6 +417,8 @@ html {
   width: 200px;
   max-width: 30vw;
   max-height: 4vh;
+  display: inline-block;
+  overflow: hidden;
 }
 
 #greeting .happy-holidays{
@@ -415,10 +428,13 @@ html {
   max-height: 30vh;
 }
 
+#greeting .text{
+  overflow: hidden;
+}
+
 #greeting p{
   color: white;
   font-size: calc(14px + .5vw);
-  display: inline-block;
 }
 
 #buildings {
@@ -509,10 +525,6 @@ html {
 @media screen and (max-width: 600px) {
   #scene {
     padding-top: 75vh;
-  }
-
-  #greeting {
-    height: 60vh;
   }
 
   #greeting .content{

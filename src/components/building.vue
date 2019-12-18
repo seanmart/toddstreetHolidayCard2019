@@ -66,6 +66,12 @@ export default {
   position: relative;
 }
 
+.building .front,
+.building .side{
+  position: relative;
+  z-index: 1;
+}
+
 .building .roof{
   transition: .25s;
   height: 30px;
@@ -78,9 +84,9 @@ export default {
 .building .snow{
   position: absolute;
   width: 50%;
-  top: -8vw;
+  top: 0px;
   right: 0px;
-  animation: grow 100s;
+  animation: grow 40s;
 }
 
 .building .roof-shadow{
@@ -136,8 +142,8 @@ export default {
 }
 
 @keyframes grow {
-  0%{transform: translateY(50%)}
-  100%{transform: translateY(0%)}
+  0%{transform: translateY(0%)}
+  100%{transform: translateY(-8vw)}
 }
 
 </style>
