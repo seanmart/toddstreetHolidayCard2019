@@ -81,6 +81,7 @@ export default {
   height: 100%;
   position: relative;
   z-index: 1;
+  box-shadow: 0px 0px 2vw rgba(255,255,255,.8);
 }
 
 .window .inner-wrapper {
@@ -104,7 +105,11 @@ export default {
   background-size: cover;
   background-position: center center;
   z-index: -1;
-  transition: transform 0.5s ease;
+  transition: transform 0.25s ease;
+}
+
+.window .wrapper:hover .content{
+  transform: scale(1.1)
 }
 
 .window .lights{
@@ -127,7 +132,7 @@ export default {
 .window .window-snow {
   fill: white;
   position: absolute;
-  top: 95%;
+  top: 90%;
   left: -10%;
   width: 120%;
   z-index: 1;

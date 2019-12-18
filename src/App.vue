@@ -136,15 +136,13 @@ export default {
     },
     setImage(id){
 
-      let tl1 = gsap.timeline()
-      tl1.set('#lightbox .images',{scale:.9},0)
-      tl1.call(()=> this.selected = id)
+      this.selected = id
 
       this.$nextTick(()=>{
-        let tl2 = gsap.timeline()
-        tl2.to('#scene',.5,{opacity:0})
-        tl2.to('#lightbox .images',.25,{opacity:1, scale: 1},0)
-        tl2.fromTo('#lightbox .message',.75,{opacity: 0,scale: .3,y: '50%'},{opacity: 1, scale: 1,y:0},.5)
+        let tl = gsap.timeline()
+        tl.to('#scene',.5,{opacity:0})
+        tl.fromTo('#lightbox .images',1,{opacity: 0, y: '20%', x: '20%'},{opacity:1, scale: 1,y:0,x:0, ease: 'power4.out'},0)
+        tl.fromTo('#lightbox .message',1,{opacity: 0,scale: .3,y: '20%', x: '-20%'},{opacity: 1, scale: 1,y:0,x:0, ease: 'power4.out'},.2)
       })
     },
     unsetImage(){
