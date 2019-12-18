@@ -168,5 +168,9 @@ export default {
   .window .wrapper {
     outline-width: 10px;
   }
+
+  .window .window-snow {
+    top: 95%;
+  }
 }
 </style>
