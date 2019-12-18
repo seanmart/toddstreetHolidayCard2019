@@ -86,7 +86,7 @@ export default {
   width: 50%;
   top: 0px;
   right: 0px;
-  animation: grow 40s;
+  animation: grow 40s forwards;
 }
 
 .building .roof-shadow{

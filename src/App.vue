@@ -17,6 +17,7 @@
               Click inside the windows of our Holiday house for a few festive
               scenes. Some might even be similar to your own!
             </p>
+            <img class="arrow" :src="img('arrow.svg')"/>
           </div>
         </div>
       </div>
@@ -137,14 +138,13 @@ export default {
 
       let tl1 = gsap.timeline()
       tl1.set('#lightbox .images',{scale:.9},0)
-      tl1.set('#lightbox .message',{scale: .5,opacity: 0},0)
       tl1.call(()=> this.selected = id)
 
       this.$nextTick(()=>{
         let tl2 = gsap.timeline()
         tl2.to('#scene',.5,{opacity:0})
         tl2.to('#lightbox .images',.25,{opacity:1, scale: 1},0)
-        tl2.to('#lightbox .message',.25,{opacity: 1, scale: 1},.5)
+        tl2.fromTo('#lightbox .message',.75,{opacity: 0,scale: .3,y: '50%'},{opacity: 1, scale: 1,y:0},.5)
       })
     },
     unsetImage(){
@@ -158,10 +158,10 @@ export default {
     images() {
       return [
         {
-          art:"images/delivery-art.jpg",
+          art:"images/roof-art.jpg",
           message:{
-            image: "images/delivery-message.svg",
-            position: {right: '5%', bottom: '8%', width: '40%'}
+            image: "images/roof-message.svg",
+            position: {bottom: '15%', right: '7%', width: '40%'}
           }
         },
         {
@@ -179,10 +179,10 @@ export default {
           }
         },
         {
-          art:"images/august-art.jpg",
+          art:"images/mom-art.jpg",
           message:{
-            image: "images/august-message.svg",
-            position: {top: '5%', right: '5%', width: '30%'}
+            image: "images/mom-message.svg",
+            position: {bottom: '5%', left: '5%', width: '35%'}
           }
         },
         {
@@ -193,10 +193,10 @@ export default {
           }
         },
         {
-          art:"images/roof-art.jpg",
+          art:"images/august-art.jpg",
           message:{
-            image: "images/roof-message.svg",
-            position: {bottom: '15%', right: '7%', width: '40%'}
+            image: "images/august-message.svg",
+            position: {top: '5%', right: '5%', width: '30%'}
           }
         },
         {
@@ -228,12 +228,12 @@ export default {
           }
         },
         {
-          art:"images/mom-art.jpg",
+          art:"images/delivery-art.jpg",
           message:{
-            image: "images/mom-message.svg",
-            position: {bottom: '5%', left: '5%', width: '35%'}
+            image: "images/delivery-message.svg",
+            position: {right: '5%', bottom: '8%', width: '40%'}
           }
-        },
+        }
       ];
     },
     leftBuilding() {
@@ -429,7 +429,15 @@ html {
 }
 
 #greeting .text{
-  overflow: hidden;
+  position: relative;
+}
+
+#greeting .arrow{
+  height: 3vw;
+  min-height: 40px;
+  position: absolute;
+  top: 150%;
+  animation: arrowdown 3s infinite;
 }
 
 #greeting p{
@@ -538,6 +546,22 @@ html {
 
   .building.main .view-finder{
     right: 20%;
+  }
+}
+
+@keyframes arrowdown {
+  0%{
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  70%{
+    opacity: 1;
+  }
+
+  100%{
+    opacity: 0;
+    transform: translateY(100%);
   }
 }
 </style>
