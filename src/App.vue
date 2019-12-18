@@ -1,6 +1,6 @@
 <template>
   <div id="page">
-    <div id="scene" ref="scene">
+    <div id="scene" ref="scene" :class="{hide: !ready}">
       <div id="sky" />
       <div id="skyline" class="scroll-item" data-speed=".5">
         <div class="art"><skyline /></div>
@@ -111,7 +111,8 @@ export default {
   },
   data(){
     return{
-      selected: null
+      selected: null,
+      ready: false
     }
   },
   mounted() {
@@ -127,6 +128,7 @@ export default {
     tl.fromTo('.building',1.5,{y:'40vh'},{y:0, stagger: .1,ease: 'power4.out'},delay)
     tl.fromTo('.pop',1,{y:'100%'},{y:0, stagger: .1, ease: 'power4.out'},delay + .25)
     tl.fromTo('#greeting .text', 1.5,{y: "5%",opacity: 0}, {y:0,opacity: 1,ease: 'power4.out'},delay + .9)
+    tl.add(()=> this.ready = true,delay + .9)
 
     scrollBuddy();
   },
@@ -311,6 +313,10 @@ html {
   overflow: hidden;
   position: relative;
   text-align: center;
+}
+
+#scene.hide{
+  height: 100vh;
 }
 
 #lightbox{
