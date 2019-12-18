@@ -17,7 +17,9 @@
               Click inside the windows of our Holiday house for a few festive
               scenes. Some might even be similar to your own!
             </p>
-            <img class="arrow" :src="img('arrow.svg')"/>
+            <div class="arrow">
+              <img class="arrow" :src="img('arrow.svg')"/>
+            </div>
           </div>
         </div>
       </div>
@@ -447,11 +449,18 @@ html {
 }
 
 #greeting .arrow{
-  height: 3vw;
-  min-height: 40px;
   position: absolute;
-  top: 150%;
+  top: 130%;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+}
+
+#greeting .arrow img{
+  display: inline-block;
   animation: arrowdown 3s infinite;
+  height: 3vw;
+  min-height: 30px;
 }
 
 #greeting p{
@@ -573,7 +582,10 @@ html {
   }
 
   #greeting .arrow{
-    top: 110%;
+    top: 105%;
+  }
+
+  #greeting .arrow img{
     height: 7vh;
     min-height:inherit;
   }
