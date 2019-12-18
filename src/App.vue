@@ -17,8 +17,8 @@
               Click inside the windows of our Holiday house for a few festive
               scenes. Some might even be similar to your own!
             </p>
-            <div class="arrow">
-              <img class="arrow" :src="img('arrow.svg')" />
+            <div class="arrow" @click="scrollTo('buildings')">
+              <img :src="img('arrow.svg')" />
             </div>
           </div>
         </div>
@@ -178,6 +178,11 @@ export default {
   methods: {
     img(i) {
       return require(`@/assets/${i}`);
+    },
+    scrollTo(id){
+      document.getElementById(id).scrollIntoView({
+        behavior: 'smooth'
+      });
     },
     setImage(id) {
       this.selected = id;
@@ -353,6 +358,7 @@ html {
   background: #74bfde;
   font-family: "Roboto Slab", serif;
   font-weight: 300;
+  scroll-behavior: smooth;
 }
 
 * {
