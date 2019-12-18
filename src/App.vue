@@ -437,7 +437,6 @@ html {
 
 #greeting .text{
   position: relative;
-  display: none;
 }
 
 #greeting .arrow{
