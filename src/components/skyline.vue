@@ -23,11 +23,7 @@ export default {
 <style lang="css">
   .tower-dot{
     fill: #f2dcc5;
-    animation: towerblink 3s infinite
+    animation: blink 3s infinite
   }
 
- @keyframes towerblink{
-   0%, 100%{opacity: .1}
-   50%{opacity: 1}
- }
 </style>

@@ -155,12 +155,12 @@ export default {
   width: 100%;
   height: 100%;
 }
-.string{
+.lights .string{
   fill:#39648e;
 }
-.light{
+.lights .light{
   fill:#fffbcf;
-  animation: blink 1s infinite
+  animation: lights 1s infinite
 }
 
 .lights .light:nth-child(7n + 2){
@@ -185,12 +185,5 @@ export default {
 
 .lights .light:nth-child(7n + 7){
   animation-delay: .4s
-}
-
-@keyframes blink{
-  0%{fill: #fffbcf;}
-  50%{fill: #fffbcf;}
-  51%{fill:#4dc4ff;}
-  100%{fill:#4dc4ff;}
 }
 </style>

@@ -1,24 +1,24 @@
 <template>
   <div id="page">
-    <div id="scene" ref="scene" :class="{hide: !ready}">
+    <div id="scene" ref="scene" :class="{ hide: !ready }">
       <div id="sky" />
       <div id="skyline" class="scroll-item" data-speed=".5">
         <div class="art"><skyline /></div>
         <div class="color" />
       </div>
       <div id="greeting">
-        <div class="content scroll-item" data-speed="-.2">
+        <div class="content scroll-item" data-speed="-.4">
           <div class="logo">
             <logo />
           </div>
-          <img :src="img('happyHolidays.svg')" class="happy-holidays"/>
+          <img :src="img('happyHolidays.svg')" class="happy-holidays" />
           <div class="text">
             <p>
               Click inside the windows of our Holiday house for a few festive
               scenes. Some might even be similar to your own!
             </p>
             <div class="arrow">
-              <img class="arrow" :src="img('arrow.svg')"/>
+              <img class="arrow" :src="img('arrow.svg')" />
             </div>
           </div>
         </div>
@@ -32,8 +32,8 @@
 
         <building class="main" :props="mainBuilding">
           <template v-slot:roof>
-            <water-tower class="pop water-tower" />
-            <view-finder class="pop view-finder"/>
+            <water-tower class="pop water-tower"  />
+            <view-finder class="pop view-finder" />
           </template>
 
           <template v-for="(item, i) in images">
@@ -47,8 +47,8 @@
             />
           </template>
           <buildingDoor
-          :border="mainBuilding.border"
-          :background="mainBuilding.door"
+            :border="mainBuilding.border"
+            :background="mainBuilding.door"
           />
         </building>
 
@@ -60,28 +60,33 @@
       </div>
       <div id="bottom">
         <div class="sidewalk">
-          <img class="snowpile" :src="img('snowPile.svg')"/>
-          <div class="top"/>
-          <div class="side"/>
+          <img class="snowpile" :src="img('snowPile.svg')" />
+          <div class="top" />
+          <div class="side" />
         </div>
-        <div class="road"/>
+        <div class="road" />
       </div>
     </div>
-    <div id="lightbox" :class="{show: selected !== null}" v-touch @click="unsetImage">
+    <div
+      id="lightbox"
+      :class="{ show: selected !== null }"
+      v-touch
+      @click="unsetImage"
+    >
       <div class="images">
         <div
-          v-for="(item,i) in images"
+          v-for="(item, i) in images"
           :key="i"
           class="image"
-          :class="{show: selected === i}"
-          >
-            <img v-if="item.art" :src="img(item.art)" class="art">
-            <img
+          :class="{ show: selected === i }"
+        >
+          <img v-if="item.art" :src="img(item.art)" class="art" />
+          <img
             v-if="item.message"
             :src="img(item.message.image)"
-            :style="item.message.position || {left: 0, top: 0}"
+            :style="item.message.position || { left: 0, top: 0 }"
             class="message"
-            />
+          />
         </div>
       </div>
     </div>
@@ -93,13 +98,13 @@
 import building from "@/components/building";
 import skyline from "@/components/skyline";
 import waterTower from "@/components/waterTower";
-import viewFinder from '@/components/viewFinder'
+import viewFinder from "@/components/viewFinder";
 import makeItSnow from "@/components/makeItSnow";
 import buildingWindow from "@/components/window";
-import buildingDoor from '@/components/door'
+import buildingDoor from "@/components/door";
 import logo from "@/components/logo";
 import scrollBuddy from "@/assets/scripts/scrollBuddy";
-import gsap from 'gsap'
+import gsap from "gsap";
 export default {
   components: {
     building,
@@ -111,136 +116,183 @@ export default {
     logo,
     makeItSnow
   },
-  data(){
-    return{
+  data() {
+    return {
       selected: null,
       ready: false
-    }
+    };
   },
   mounted() {
-    let tl = gsap.timeline()
-    tl.fromTo('#greeting .logo svg', 1.5,{y: "100%"}, {y:0, ease: 'power4.out'},0)
-    tl.fromTo('#greeting .happy-holidays', 2,{scale: .5, opacity: 0},{scale: 1,opacity:1, ease: 'power4.out'},.85)
-    tl.fromTo('canvas', 1,{opacity: 0}, {opacity: 1},1.5)
+    let tl = gsap.timeline();
+    tl.fromTo(
+      "#greeting .logo svg",
+      1.5,
+      { y: "100%" },
+      { y: 0, ease: "power4.out" },
+      0
+    );
+    tl.fromTo(
+      "#greeting .happy-holidays",
+      2,
+      { scale: 0.5, opacity: 0 },
+      { scale: 1, opacity: 1, ease: "power4.out" },
+      0.85
+    );
+    tl.fromTo("canvas", 1, { opacity: 0 }, { opacity: 1 }, 1.5);
 
-    let delay = 2.2
+    let delay = 2.2;
 
-    tl.to('#greeting', 1,{y: '-15vh', ease: 'power2.inOut'},delay)
-    tl.fromTo('#skyline',2,{opacity: 0, y: '-2%'}, {opacity: 1, y:0,ease: 'power4.out'},delay)
-    tl.fromTo('.building',1.5,{y:'40vh'},{y:0, stagger: .1,ease: 'power4.out'},delay)
-    tl.fromTo('.pop',1,{y:'100%'},{y:0, stagger: .1, ease: 'power4.out'},delay + .25)
-    tl.fromTo('#greeting .text', 1.5,{y: "5%",opacity: 0}, {y:0,opacity: 1,ease: 'power4.out'},delay + .9)
-    tl.add(()=> this.ready = true,delay + .9)
+    tl.to("#greeting", 1, { y: "-15vh", ease: "power2.inOut" }, delay);
+    tl.fromTo(
+      "#skyline",
+      2,
+      { opacity: 0, y: "-2%" },
+      { opacity: 1, y: 0, ease: "power4.out" },
+      delay
+    );
+    tl.fromTo(
+      ".building",
+      1.5,
+      { y: "40vh" },
+      { y: 0, stagger: 0.1, ease: "power4.out" },
+      delay
+    );
+    tl.fromTo(
+      ".pop",
+      1,
+      { y: "100%" },
+      { y: 0, stagger: 0.1, ease: "power4.out" },
+      delay + 0.25
+    );
+    tl.fromTo(
+      "#greeting .text",
+      1.5,
+      { y: "5%", opacity: 0 },
+      { y: 0, opacity: 1, ease: "power4.out" },
+      delay + 0.9
+    );
+    tl.add(() => (this.ready = true), delay + 0.9);
 
     scrollBuddy();
   },
-  methods:{
-    img(i){
-      return require(`@/assets/${i}`)
+  methods: {
+    img(i) {
+      return require(`@/assets/${i}`);
     },
-    setImage(id){
+    setImage(id) {
+      this.selected = id;
 
-      this.selected = id
-
-      this.$nextTick(()=>{
-        let tl = gsap.timeline()
-        tl.to('#scene',.5,{opacity:0})
-        tl.fromTo('#lightbox .images',1,{opacity: 0, y: '20%', x: '20%'},{opacity:1, scale: 1,y:0,x:0, ease: 'power4.out'},0)
-        tl.fromTo('#lightbox .message',1,{opacity: 0,scale: .3,y: '20%', x: '-20%'},{opacity: 1, scale: 1,y:0,x:0, ease: 'power4.out'},.2)
-      })
+      this.$nextTick(() => {
+        let tl = gsap.timeline();
+        tl.to("#scene", 0.5, { opacity: 0 });
+        tl.fromTo(
+          "#lightbox .images",
+          1,
+          { opacity: 0, y: "20%", x: "20%" },
+          { opacity: 1, scale: 1, y: 0, x: 0, ease: "power4.out" },
+          0
+        );
+        tl.fromTo(
+          "#lightbox .message",
+          1,
+          { opacity: 0, scale: 0.3, y: "20%", x: "-20%" },
+          { opacity: 1, scale: 1, y: 0, x: 0, ease: "power4.out" },
+          0.2
+        );
+      });
     },
-    unsetImage(){
-      let tl = gsap.timeline()
-      tl.to('#lightbox .images',.25,{opacity:0})
-      tl.to('#scene', .25,{opacity: 1},0)
-      tl.add(()=>this.selected = null)
+    unsetImage() {
+      let tl = gsap.timeline();
+      tl.to("#lightbox .images", 0.25, { opacity: 0 });
+      tl.to("#scene", 0.25, { opacity: 1 }, 0);
+      tl.add(() => (this.selected = null));
     }
   },
   computed: {
     images() {
       return [
         {
-          art:"images/roof-art.jpg",
-          message:{
+          art: "images/roof-art.jpg",
+          message: {
             image: "images/roof-message.svg",
-            position: {bottom: '15%', right: '7%', width: '40%'}
+            position: { bottom: "15%", right: "7%", width: "40%" }
           }
         },
         {
-          art:"images/negotiation-art.jpg",
-          message:{
+          art: "images/negotiation-art.jpg",
+          message: {
             image: "images/negotiation-message.svg",
-            position: {bottom: '5%', right: '4%', width: '50%'}
+            position: { bottom: "5%", right: "4%", width: "50%" }
           }
         },
         {
-          art:"images/movie-art.jpg",
-          message:{
+          art: "images/movie-art.jpg",
+          message: {
             image: "images/movie-message.svg",
-            position: {top: '5%', left: '5%', width: '90%'}
+            position: { top: "5%", left: "5%", width: "90%" }
           }
         },
         {
-          art:"images/flour-art.jpg",
-          message:{
+          art: "images/flour-art.jpg",
+          message: {
             image: "images/flour-message.svg",
-            position: {left: '5%', bottom: '5%', width: '45%'}
+            position: { left: "5%", bottom: "5%", width: "45%" }
           }
         },
         {
-          art:"images/mom-art.jpg",
-          message:{
+          art: "images/mom-art.jpg",
+          message: {
             image: "images/mom-message.svg",
-            position: {bottom: '5%', left: '5%', width: '35%'}
+            position: { bottom: "5%", left: "5%", width: "35%" }
           }
         },
         {
-          art:"images/peeling-art.jpg",
-          message:{
+          art: "images/peeling-art.jpg",
+          message: {
             image: "images/peeling-message.svg",
-            position: {bottom: '5%', left: '5%', width: '90%'}
+            position: { bottom: "5%", left: "5%", width: "90%" }
           }
         },
         {
-          art:"images/august-art.jpg",
-          message:{
+          art: "images/august-art.jpg",
+          message: {
             image: "images/august-message.svg",
-            position: {top: '5%', right: '5%', width: '30%'}
+            position: { top: "5%", right: "5%", width: "30%" }
           }
         },
         {
-          art:"images/roasting-art.jpg",
-          message:{
+          art: "images/roasting-art.jpg",
+          message: {
             image: "images/roasting-message.svg",
-            position: {bottom: '5%', right: '5%', width: '60%'}
+            position: { bottom: "5%", right: "5%", width: "60%" }
           }
         },
         {
-          art:"images/latke-art.jpg",
-          message:{
+          art: "images/latke-art.jpg",
+          message: {
             image: "images/latke-message.svg",
-            position: {top: '5%', right: '5%', width: '45%'}
+            position: { top: "5%", right: "5%", width: "45%" }
           }
         },
         {
-          art:"images/busy-art.jpg",
-          message:{
+          art: "images/busy-art.jpg",
+          message: {
             image: "images/busy-message.svg",
-            position: {bottom: '5%', left: '5%', width: '45%'}
+            position: { bottom: "5%", left: "5%", width: "45%" }
           }
         },
         {
-          art:"images/cookies-art.jpg",
-          message:{
+          art: "images/cookies-art.jpg",
+          message: {
             image: "images/cookies-message.svg",
-            position: {top: '35%', right: '5%', width: '40%'}
+            position: { top: "35%", right: "5%", width: "40%" }
           }
         },
         {
-          art:"images/delivery-art.jpg",
-          message:{
+          art: "images/delivery-art.jpg",
+          message: {
             image: "images/delivery-message.svg",
-            position: {right: '5%', bottom: '8%', width: '40%'}
+            position: { right: "5%", bottom: "8%", width: "40%" }
           }
         }
       ];
@@ -273,7 +325,7 @@ export default {
         roofArchFront: "#d9f1fb",
         roofArchSide: "#5f85af",
         border: "#5f85af",
-        door: '#436183'
+        door: "#436183"
       };
     },
     rightBuilding() {
@@ -317,11 +369,11 @@ html {
   text-align: center;
 }
 
-#scene.hide{
+#scene.hide {
   height: 100vh;
 }
 
-#lightbox{
+#lightbox {
   position: fixed;
   z-index: 20;
   top: 0px;
@@ -329,18 +381,18 @@ html {
   bottom: 0px;
   right: 0px;
   display: none;
-  transition: transform .25s;
+  transition: transform 0.25s;
 }
 
-#lightbox.active{
-  transform: scale(.95)
+#lightbox.active {
+  transform: scale(0.95);
 }
 
-#lightbox.show{
+#lightbox.show {
   display: block;
 }
 
-#lightbox .images{
+#lightbox .images {
   height: 100%;
   width: 100%;
   display: flex;
@@ -348,25 +400,24 @@ html {
   align-items: center;
 }
 
-#lightbox .image{
+#lightbox .image {
   flex: 0 0 auto;
   display: none;
   position: relative;
 }
 
-#lightbox .image.show{
+#lightbox .image.show {
   display: block;
 }
 
-#lightbox .art{
+#lightbox .art {
   max-height: 90vh;
   max-width: 100vw;
 }
 
-#lightbox .message{
+#lightbox .message {
   position: absolute;
 }
-
 
 #sky {
   position: fixed;
@@ -433,22 +484,22 @@ html {
   overflow: hidden;
 }
 
-#greeting .logo svg{
+#greeting .logo svg {
   max-height: 4vh;
 }
 
-#greeting .happy-holidays{
+#greeting .happy-holidays {
   fill: white;
   width: 100%;
   margin: 5% 0px;
   max-height: 30vh;
 }
 
-#greeting .text{
+#greeting .text {
   position: relative;
 }
 
-#greeting .arrow{
+#greeting .arrow {
   position: absolute;
   top: 130%;
   left: 0px;
@@ -456,16 +507,16 @@ html {
   text-align: center;
 }
 
-#greeting .arrow img{
+#greeting .arrow img {
   display: inline-block;
   animation: arrowdown 3s infinite;
   height: 3vw;
   min-height: 30px;
 }
 
-#greeting p{
+#greeting p {
   color: white;
-  font-size: calc(14px + .5vw);
+  font-size: calc(14px + 0.5vw);
 }
 
 #buildings {
@@ -513,16 +564,16 @@ html {
   fill: #2f4155;
 }
 
-#bottom{
+#bottom {
   position: relative;
   z-index: 1;
 }
 
-#bottom .sidewalk{
+#bottom .sidewalk {
   position: relative;
 }
 
-#bottom .sidewalk .snowpile{
+#bottom .sidewalk .snowpile {
   position: absolute;
   left: 30%;
   top: 0px;
@@ -531,34 +582,47 @@ html {
   min-width: 600px;
 }
 
-#bottom .sidewalk .top{
-  height:15vh;
+#bottom .sidewalk .top {
+  height: 15vh;
   width: 100%;
-  background: rgb(255,255,255);
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 87%, rgba(186,210,255,1) 100%);
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 87%,
+    rgba(186, 210, 255, 1) 100%
+  );
 }
 
-#bottom .sidewalk .side{
-  height:3vh;
+#bottom .sidewalk .side {
+  height: 3vh;
   width: 100%;
-  background: rgb(150,150,150);
-  background: linear-gradient(180deg, rgba(78,78,78,1) 0%, rgba(100,100,100,1) 100%);
+  background: rgb(150, 150, 150);
+  background: linear-gradient(
+    180deg,
+    rgba(78, 78, 78, 1) 0%,
+    rgba(100, 100, 100, 1) 100%
+  );
 }
 
-#bottom .road{
+#bottom .road {
   height: 30vw;
   width: 100%;
-  background: rgb(255,255,255);
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 87%, rgba(186,210,255,1) 100%);
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 87%,
+    rgba(186, 210, 255, 1) 100%
+  );
 }
-
 
 @media screen and (max-width: 600px) {
   #scene {
     padding-top: 75vh;
   }
 
-  #greeting .content{
+  #greeting .content {
     width: 80vw;
   }
 
@@ -567,43 +631,99 @@ html {
     flex: 0 0 80vh;
   }
 
-  .building.main .view-finder{
+  .building.main .view-finder {
     right: 20%;
   }
 }
 
-@media screen and (max-height: 500px){
-  #scene{
+@media screen and (max-height: 500px) {
+  #scene {
     padding-top: 105vh;
   }
 
-  #greeting{
+  #greeting {
     margin-top: 15vh;
   }
 
-  #greeting .arrow{
+  #greeting .arrow {
     top: 105%;
   }
 
-  #greeting .arrow img{
+  #greeting .arrow img {
     height: 7vh;
-    min-height:inherit;
+    min-height: inherit;
   }
 }
 
 @keyframes arrowdown {
-  0%{
+  0% {
     opacity: 0;
     transform: translateY(0);
   }
 
-  70%{
+  70% {
     opacity: 1;
   }
 
-  100%{
+  100% {
     opacity: 0;
     transform: translateY(100%);
+  }
+}
+
+@keyframes grow {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-8vw);
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes lights {
+  0% {
+    fill: #fffbcf;
+  }
+  50% {
+    fill: #fffbcf;
+  }
+  51% {
+    fill: #4dc4ff;
+  }
+  100% {
+    fill: #4dc4ff;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
   }
 }
 </style>

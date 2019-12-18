@@ -51,11 +51,6 @@ export default {
     transform-origin: top center;
   }
 
-  @keyframes sway{
-    0%, 100%{ transform: rotate(-2deg);}
-    50%{ transform: rotate(2deg); }
-  }
-
   @media screen and (max-width: 600px){
     .door{
       flex: 0 0 100%;

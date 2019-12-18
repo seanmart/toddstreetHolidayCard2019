@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="window" @click.stop="selected" v-touch >
+  <div class="window" @click.stop="selected" v-touch>
     <div class="outer-wrapper outline" ref="wrapper">
       <div class="wrapper" :style="{ outlineColor: border }" ref="content">
         <div class="inner-wrapper">
@@ -7,40 +7,40 @@
           <div class="content" :style="windowStyle" />
         </div>
         <img :src="img(`windowSnow.svg`)" class="window-snow" />
-        <lights v-if="effect" class="lights"/>
-        <bulbs v-if="effect" class="bulbs"/>
+        <lights v-if="effect" class="lights" />
+        <bulbs v-if="effect" class="bulbs" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import gsap from 'gsap'
-import lights from '@/components/lights'
-import bulbs from '@/components/bulbs'
+import gsap from "gsap";
+import lights from "@/components/lights";
+import bulbs from "@/components/bulbs";
 export default {
-  components: { lights,bulbs },
+  components: { lights, bulbs },
   props: {
     image: { type: String, default: null },
-    imageId: {type: Number, defualt: null},
+    imageId: { type: Number, defualt: null },
     color: { type: String, default: null },
     border: { type: String, default: "#aaa" },
-    effect:{type: Boolean, default: false}
+    effect: { type: Boolean, default: false }
   },
   computed: {
     windowStyle() {
-      let styles = {}
-      if (this.image) styles.backgroundImage = `url(${this.img(this.image)})`
-      if (this.color) styles.backgroundColor = this.color
-      return styles
+      let styles = {};
+      if (this.image) styles.backgroundImage = `url(${this.img(this.image)})`;
+      if (this.color) styles.backgroundColor = this.color;
+      return styles;
     }
   },
   methods: {
-    img(i){
-      return require(`@/assets/${i}`)
+    img(i) {
+      return require(`@/assets/${i}`);
     },
     selected() {
-      this.$emit('selected', this.imageId)
+      this.$emit("selected", this.imageId);
     }
   }
 };
@@ -50,13 +50,13 @@ export default {
 .window {
   flex: 0 0 50%;
   height: auto;
-  transition: transform .25s;
+  transition: transform 0.25s;
   position: relative;
   margin-bottom: 5vw;
 }
 
-.window.active{
-  transform: scale(.95)
+.window.active {
+  transform: scale(0.95);
 }
 
 .window:before {
@@ -65,7 +65,7 @@ export default {
   padding-top: 100%;
 }
 
-.window .outer-wrapper{
+.window .outer-wrapper {
   position: absolute;
   top: 4vw;
   left: 4vw;
@@ -81,7 +81,7 @@ export default {
   height: 100%;
   position: relative;
   z-index: 1;
-  box-shadow: 0px 0px 2vw rgba(255,255,255,.8);
+  box-shadow: 0px 0px 2vw rgba(255, 255, 255, 0.8);
 }
 
 .window .inner-wrapper {
@@ -100,7 +100,6 @@ export default {
   bottom: -1px;
 }
 
-
 .window .content {
   background-size: cover;
   background-position: center center;
@@ -108,21 +107,23 @@ export default {
   transition: transform 0.25s ease;
 }
 
-.window .lights{
+.window .lights {
   position: absolute;
   top: -5%;
   left: -5%;
   width: 110%;
   height: 110%;
+  pointer-events: none;
 }
 
-.window .bulbs{
+.window .bulbs {
   width: 100%;
   position: absolute;
   left: 0px;
   top: 100%;
   margin-top: 2%;
   z-index: 0;
+  pointer-events: none;
 }
 
 .window .window-snow {
@@ -134,22 +135,21 @@ export default {
   z-index: 1;
 }
 
-@media screen and (min-width: 601px){
+@media screen and (min-width: 601px) {
   .window:nth-child(4n + 1) .bulbs,
-  .window:nth-child(4n + 4) .bulbs{
+  .window:nth-child(4n + 4) .bulbs {
     display: none;
   }
 
   .window:nth-child(4n + 2) .lights,
-  .window:nth-child(4n + 3) .lights{
+  .window:nth-child(4n + 3) .lights {
     display: none;
   }
 
-  .window .wrapper:hover .content{
-    transform: scale(1.1)
+  .window .inner-wrapper:hover .content {
+    transform: scale(1.1);
   }
 }
-
 
 @media screen and (max-width: 600px) {
   .window {
@@ -157,15 +157,15 @@ export default {
     margin-bottom: 15vw;
   }
 
-  .window:nth-child(2n + 1) .bulbs{
+  .window:nth-child(2n + 1) .bulbs {
     display: none;
   }
 
-  .window:nth-child(2n + 2) .lights{
+  .window:nth-child(2n + 2) .lights {
     display: none;
   }
 
-  .window .wrapper{
+  .window .wrapper {
     outline-width: 10px;
   }
 }

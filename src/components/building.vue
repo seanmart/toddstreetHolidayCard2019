@@ -141,9 +141,4 @@ export default {
   background-size: 10vw 10vw;
 }
 
-@keyframes grow {
-  0%{transform: translateY(0%)}
-  100%{transform: translateY(-8vw)}
-}
-
 </style>

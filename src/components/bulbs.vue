@@ -42,18 +42,6 @@ export default{
   animation-delay: 1s
 }
 
-@keyframes swing{
-  0%{
-    transform: rotate(-10deg);
-  }
-  50%{
-    transform: rotate(10deg);
-  }
-  100%{
-    transform: rotate(-10deg);
-  }
-}
-
 @media screen and (max-width: 600px){
   .bulb{
     height: 12vw;
